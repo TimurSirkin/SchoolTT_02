@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -20,29 +21,45 @@ namespace SchoolTT_02.Table
     /// </summary>
     public partial class Day : UserControl
     {
+        public event EventHandler LessonAdded;
         public Day()
         {
             InitializeComponent();
+            DataContext = this;
         }
 
 
-        //<Поля>
-        List<Lesson> LessonList = new List<Lesson>();//Список уроков в этот день
-        //</Поля>
 
-        //<Методы>
-        void Add(Lesson pLesson)
+        //<Поля и свойства>----------------
+        public List<Lesson> LessonList = new List<Lesson>();//Список уроков в этот день
+        //</Поля и свойства>----------------
+
+
+
+        //<Методы>----------------
+        private void Add(Lesson pLesson)
         {
             this.LessonList.Add(pLesson);
-            TableGrid.RowDefinitions.Add(new RowDefinition());
-            TableGrid.Children.Add(pDay);
-            Grid.SetRow(pDay, pPlace);
-            TableGrid.RowDefinitions.Add(new RowDefinition());
-        }
-        //</Методы>
+            OnLessonAdded();
+        }//Добавляет урок в список дней и вызывает событе, обработчик которого создаст новую строку в Day
 
-        //<Обработчики>
+        protected virtual void OnLessonAdded()
+        {
+            LessonAdded?.Invoke(this, EventArgs.Empty);
+        }//Инициализация события
+        //</Методы>----------------
 
-        //</Обработчики>
+
+
+        //<Обработчики>----------------
+        private void AddLessonClick(object sender, RoutedEventArgs e)
+        {
+            Add(new Lesson());
+        }//Обработчик нажатия на кнопку добавления урока
+        //</Обработчики>----------------
+
+
+
+
     }
 }

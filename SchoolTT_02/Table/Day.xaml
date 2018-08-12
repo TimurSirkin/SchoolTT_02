@@ -29,8 +29,7 @@
             <RowDefinition></RowDefinition>
             <RowDefinition Height="30"></RowDefinition>
         </Grid.RowDefinitions>
-        
-        <TextBlock Name="DayTextBlock" Text="Day">
+        <TextBlock Name="DayTextBlock" Text ="День" >
             <TextBlock.LayoutTransform>
                 <RotateTransform Angle="270"></RotateTransform>
             </TextBlock.LayoutTransform>

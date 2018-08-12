@@ -16,7 +16,7 @@
         </Style>
     </UserControl.Resources>
 
-    <TextBlock Name="TopBorderText" Text="Lesson">
+    <TextBlock Name="TopBorderText" Text="Урок">
         <TextBlock.LayoutTransform>
             <RotateTransform Angle="270"></RotateTransform>
         </TextBlock.LayoutTransform>
