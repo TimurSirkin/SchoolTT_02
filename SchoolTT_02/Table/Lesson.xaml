@@ -24,7 +24,7 @@
     </UserControl.ContextMenu>
 
 
-    <TextBlock Name="TopBorderText" Text="Урок">
+    <TextBlock Name="LessonNumber" Text="Класс">
         <TextBlock.LayoutTransform>
             <RotateTransform Angle="270"></RotateTransform>
         </TextBlock.LayoutTransform>

@@ -50,19 +50,32 @@ namespace SchoolTT_02.Table
 
 
         //<Методы>----------------
+        private void Add(Lesson pLesson, int pPlace)//Добавление урока в таблицу
+        {
+            TableGrid.Children.Add(pLesson);
+            pLesson.LessonDeleted += DeleteLessonRow;
+            Grid.SetRow(pLesson, pPlace);
+            Grid.SetColumn(pLesson, СLessonPlace);
+            AddCellsToRow(pPlace, pLesson);
+            //pLesson.Number= 34;
+            //pLesson.Na
+        }
+
         private void Add(Day pDay, int pPlace)//Добавление дня в список и создание новой строки
         {
             this._dayList.Add(pDay);
-            pDay.LessonAdded += Add; 
-            Lesson newLesson = new Lesson();;
-            pDay.LessonList.Add(newLesson);
-            TableGrid.RowDefinitions.Add(new RowDefinition() { MinHeight = СMinHeight });
             TableGrid.Children.Add(pDay);
-            TableGrid.Children.Add(newLesson);
             Grid.SetRow(pDay, pPlace);
-            Grid.SetRow(newLesson, pPlace);
-            Grid.SetColumn(newLesson, СLessonPlace);
-            AddCellsToRow(pPlace, newLesson);
+            pDay.LessonAdded += Add;
+            pDay.LessonAdded += (s,e) => Grid.SetRowSpan(pDay, pDay.LessonList.Count);
+
+            //var newLesson = new Lesson();
+            //newLesson.LessonDeleted += (s, e) => Grid.SetRowSpan(pDay, pDay.LessonList.Count);
+            //pDay.LessonList.Add(newLesson);
+            //Add(newLesson, pPlace);
+            //pDay.RenameLessons();
+
+            TableGrid.RowDefinitions.Add(new RowDefinition(){ MinHeight = СMinHeight });
             TableGrid.RowDefinitions.Add(new RowDefinition(){Height = new GridLength(СSeparatorHeight) });
         }
 
@@ -81,12 +94,9 @@ namespace SchoolTT_02.Table
             Lesson lesson = day.LessonList[day.LessonList.Count - 1];
             int place = Grid.GetRow(day) + day.LessonList.Count-1;
             MoveRows(place, 1);
-            TableGrid.RowDefinitions.Insert(place, new RowDefinition() { MinHeight = СMinHeight });
-            Grid.SetRowSpan(day, day.LessonList.Count);
-            TableGrid.Children.Add(lesson);
-            Grid.SetRow(lesson, place);
-            Grid.SetColumn(lesson, СLessonPlace);
-            AddCellsToRow(place, lesson);
+            TableGrid.RowDefinitions.Insert(place, new RowDefinition() { MinHeight = СMinHeight }); 
+            Add(lesson, place);
+            day.RenameLessons();
         }
 
         private void MoveRows(int pStart, int pDirection)//Смещает все элементы таблицы, которые находятся ниже строки с номером pStart, на pDirection строк
@@ -135,6 +145,14 @@ namespace SchoolTT_02.Table
             } 
             
         }
+
+        private void DeleteCellsFromRow(int pPlace, Lesson pLesson)//
+        {
+            foreach (var cell in pLesson.CellList)
+            {
+                TableGrid.Children.Remove(cell);
+            }
+        }
         //</Методы>----------------
 
 
@@ -149,6 +167,23 @@ namespace SchoolTT_02.Table
         {
             Add(new Day(), TableGrid.RowDefinitions.Count);
         }//Обработчик нажатия кнопки добавления дня
+
+        private void DeleteLessonRow(object sender, EventArgs e)//Вызывается при обработке событие LessonDeleted(Удаление урока из списка дней)
+        {
+            var lesson = (Lesson)sender;
+            var place = Grid.GetRow(lesson);
+            TableGrid.Children.Remove(lesson);
+            DeleteCellsFromRow(place, lesson);
+            MoveRows(place, -1);
+            foreach (var day in _dayList)
+            {
+                day.RenameLessons();
+            }
+            //MoveRows(place, -1);
+            //TableGrid.RowDefinitions.Insert(place, new RowDefinition() { MinHeight = СMinHeight });
+            //Grid.SetRowSpan(day, day.LessonList.Count);
+            //Add(lesson, place);
+        }
         //</Обработчики>----------------
     }
 }

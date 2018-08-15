@@ -20,6 +20,7 @@ namespace SchoolTT_02.Table
     /// </summary>
     public partial class Lesson : UserControl
     {
+        public event EventHandler LessonDeleted;
         public Lesson()
         {
             InitializeComponent();
@@ -27,13 +28,35 @@ namespace SchoolTT_02.Table
 
         //<Поля и свойства>----------------
         public List<Cell> CellList = new List<Cell>();//Список ячеек в строке, соответствующего урока
+
+        private int _number;
+        public int Number
+        {
+            get => _number;
+            set
+            {
+                _number = value;
+                LessonNumber.Text = value.ToString();
+            }
+        }
         //</Поля и свойства>----------------
+
+
 
         //<Обработчики>----------------
         private void ContextMenuDeleteClick(object sender, RoutedEventArgs e)
         {
-            
+            OnLessonDeleted();
         }//Обработчик нажатия на кнопку удаления урока
-        //</Обработчики>----------------
+         //</Обработчики>----------------
+
+
+
+        //<Методы>----------------
+        protected virtual void OnLessonDeleted()
+        {
+            LessonDeleted?.Invoke(this, EventArgs.Empty);
+        }
+        //</Методы>----------------
     }
 }

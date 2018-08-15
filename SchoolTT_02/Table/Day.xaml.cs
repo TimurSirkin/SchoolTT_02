@@ -31,7 +31,6 @@ namespace SchoolTT_02.Table
 
 
         //<Поля и свойства>----------------
-
         public List<Lesson> LessonList = new List<Lesson>();//Список уроков в этот день
         //</Поля и свойства>----------------
 
@@ -41,8 +40,18 @@ namespace SchoolTT_02.Table
         private void Add(Lesson pLesson)
         {
             this.LessonList.Add(pLesson);
+            pLesson.LessonDeleted += DeleteLesson;
+            pLesson.LessonDeleted += (s, e) => Grid.SetRowSpan(this, this.LessonList.Count);
             OnLessonAdded();
         }//Добавляет урок в список дней и вызывает событе, обработчик которого создаст новую строку в Day
+
+        public void RenameLessons()//Нумерует уроки соответственно их порядку в списке уроков соответствующего дня
+        { 
+            foreach (var lesson in LessonList)
+            {
+                lesson.Number = LessonList.IndexOf(lesson)+1;
+            }
+        }
 
         protected virtual void OnLessonAdded()
         {
@@ -57,6 +66,20 @@ namespace SchoolTT_02.Table
         {
             Add(new Lesson());
         }//Обработчик нажатия на кнопку добавления урока
+
+        private void DeleteLesson(object sender, EventArgs e)//Обработчик удаления урока
+        {
+            var lessonForDelete = (Lesson) sender;
+            var indexForDelete = LessonList.IndexOf(lessonForDelete);
+            for (var i = indexForDelete; i < LessonList.Count - 1; i++)
+            {
+                LessonList[i] = LessonList[i + 1];
+            }
+
+            LessonList[LessonList.Count - 1] = lessonForDelete;
+            LessonList.Remove(lessonForDelete);
+
+        }
         //</Обработчики>----------------
 
 
