@@ -31,6 +31,7 @@ namespace SchoolTT_02.Table
 
 
         //<Поля и свойства>----------------
+
         public List<Lesson> LessonList = new List<Lesson>();//Список уроков в этот день
         //</Поля и свойства>----------------
 

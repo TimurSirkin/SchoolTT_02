@@ -46,3 +46,5 @@ C:\Users\SWS\Documents\GitHub\SchoolTT_02\SchoolTT_02\obj\Debug\SchoolTT_02.cspr
 C:\Users\SWS\Documents\GitHub\SchoolTT_02\SchoolTT_02\obj\Debug\SchoolTT_02.csproj.CoreCompileInputs.cache
 C:\Users\SWS\Documents\GitHub\SchoolTT_02\SchoolTT_02\obj\Debug\Cell.g.cs
 C:\Users\SWS\Documents\GitHub\SchoolTT_02\SchoolTT_02\obj\Debug\Cell.baml
+C:\Users\SWS\Documents\GitHub\SchoolTT_02\SchoolTT_02\obj\Debug\Card.g.cs
+C:\Users\SWS\Documents\GitHub\SchoolTT_02\SchoolTT_02\obj\Debug\Card.baml

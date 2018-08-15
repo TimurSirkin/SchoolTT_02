@@ -13,23 +13,29 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace SchoolTT_02.Table
+namespace SchoolTT_02
 {
     /// <summary>
-    /// Логика взаимодействия для Class.xaml
+    /// Логика взаимодействия для Card.xaml
     /// </summary>
-    public partial class Class : UserControl
+    public partial class Card : UserControl
     {
-        public Class()
+        public Card()
         {
             InitializeComponent();
             DataContext = this;
         }
 
-        //<Поля и свойства>----------------
-        public List<Cell> CellList = new List<Cell>();//Список ячеек в столбце, соответствующего класса
+        public string FirstName { get; set; }
 
-        public new string Name { get; set; }
-        //</Поля и свойства>----------------
+        public string SecondName { get; set; }
+
+        public string ThirdName { get; set; }
+
+        public string Class { get; set; }
+
+        public string Discipline { get; set; }
+
+        public Color Color { get; set; }
     }
 }

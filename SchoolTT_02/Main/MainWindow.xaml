@@ -6,10 +6,18 @@
         xmlns:local="clr-namespace:SchoolTT_02"
         xmlns:Table="clr-namespace:SchoolTT_02.Table" x:Class="SchoolTT_02.MainWindow"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow" >
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition MaxWidth="200"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+
+        <Table:Table Grid.Column="0"/>
+        <ListBox Name="CardListBox" Grid.Column="1"></ListBox>
+    </Grid>
     
-    
-    <Table:Table/>
     
     
     

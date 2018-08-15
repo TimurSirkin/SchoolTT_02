@@ -54,6 +54,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Card.xaml.cs">
+      <DependentUpon>Card.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Cell.xaml.cs">
       <DependentUpon>Cell.xaml</DependentUpon>
     </Compile>
@@ -69,6 +72,10 @@
     <Compile Include="Table\Table.xaml.cs">
       <DependentUpon>Table.xaml</DependentUpon>
     </Compile>
+    <Page Include="Card.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Cell.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

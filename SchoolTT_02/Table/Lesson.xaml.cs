@@ -24,5 +24,16 @@ namespace SchoolTT_02.Table
         {
             InitializeComponent();
         }
+
+        //<Поля и свойства>----------------
+        public List<Cell> CellList = new List<Cell>();//Список ячеек в строке, соответствующего урока
+        //</Поля и свойства>----------------
+
+        //<Обработчики>----------------
+        private void ContextMenuDeleteClick(object sender, RoutedEventArgs e)
+        {
+            
+        }//Обработчик нажатия на кнопку удаления урока
+        //</Обработчики>----------------
     }
 }
