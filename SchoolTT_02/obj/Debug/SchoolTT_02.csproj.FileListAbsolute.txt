@@ -20,7 +20,6 @@ C:\Users\timur\source\repos\SchoolTT_02\SchoolTT_02\obj\Debug\Table\Class.g.cs
 C:\Users\timur\source\repos\SchoolTT_02\SchoolTT_02\obj\Debug\Table\Day.g.cs
 C:\Users\timur\source\repos\SchoolTT_02\SchoolTT_02\obj\Debug\Table\Class.baml
 C:\Users\timur\source\repos\SchoolTT_02\SchoolTT_02\obj\Debug\Table\Day.baml
-C:\Users\SWS\Documents\GitHub\SchoolTT_02\SchoolTT_02\obj\Debug\SchoolTT_02.csprojAssemblyReference.cache
 C:\Users\SWS\Documents\GitHub\SchoolTT_02\SchoolTT_02\obj\Debug\Main\MainWindow.g.cs
 C:\Users\SWS\Documents\GitHub\SchoolTT_02\SchoolTT_02\obj\Debug\Table\Class.g.cs
 C:\Users\SWS\Documents\GitHub\SchoolTT_02\SchoolTT_02\obj\Debug\Table\Day.g.cs
@@ -48,3 +47,9 @@ C:\Users\SWS\Documents\GitHub\SchoolTT_02\SchoolTT_02\obj\Debug\Cell.g.cs
 C:\Users\SWS\Documents\GitHub\SchoolTT_02\SchoolTT_02\obj\Debug\Cell.baml
 C:\Users\SWS\Documents\GitHub\SchoolTT_02\SchoolTT_02\obj\Debug\Card.g.cs
 C:\Users\SWS\Documents\GitHub\SchoolTT_02\SchoolTT_02\obj\Debug\Card.baml
+C:\Users\SWS\Documents\GitHub\SchoolTT_02\SchoolTT_02\bin\Debug\WPFColorPickerLib.dll
+C:\Users\SWS\Documents\GitHub\SchoolTT_02\SchoolTT_02\bin\Debug\WPFColorPickerLib.pdb
+C:\Users\SWS\Documents\GitHub\SchoolTT_02\SchoolTT_02\obj\Debug\SchoolTT_02.csprojAssemblyReference.cache
+C:\Users\SWS\Documents\GitHub\SchoolTT_02\SchoolTT_02\obj\Debug\SchoolTT_02.csproj.CopyComplete
+C:\Users\SWS\Documents\GitHub\SchoolTT_02\SchoolTT_02\obj\Debug\EditWindow.g.cs
+C:\Users\SWS\Documents\GitHub\SchoolTT_02\SchoolTT_02\obj\Debug\EditWindow.baml

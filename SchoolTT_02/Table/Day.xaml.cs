@@ -26,6 +26,7 @@ namespace SchoolTT_02.Table
         {
             InitializeComponent();
             DataContext = this;
+            //Add(new Lesson());
         }
 
 
@@ -37,10 +38,10 @@ namespace SchoolTT_02.Table
 
 
         //<Методы>----------------
-        private void Add(Lesson pLesson)
+        public void Add(Lesson pLesson)
         {
             this.LessonList.Add(pLesson);
-            pLesson.LessonDeleted += DeleteLesson;
+            pLesson.LessonDeleted += DeleteLessonFromList;
             pLesson.LessonDeleted += (s, e) => Grid.SetRowSpan(this, this.LessonList.Count);
             OnLessonAdded();
         }//Добавляет урок в список дней и вызывает событе, обработчик которого создаст новую строку в Day
@@ -67,7 +68,7 @@ namespace SchoolTT_02.Table
             Add(new Lesson());
         }//Обработчик нажатия на кнопку добавления урока
 
-        private void DeleteLesson(object sender, EventArgs e)//Обработчик удаления урока
+        private void DeleteLessonFromList(object sender, EventArgs e)//Обработчик удаления урока
         {
             var lessonForDelete = (Lesson) sender;
             var indexForDelete = LessonList.IndexOf(lessonForDelete);
@@ -81,6 +82,12 @@ namespace SchoolTT_02.Table
 
         }
         //</Обработчики>----------------
+
+
+
+        //<События>----------------
+
+        //</События>----------------
 
 
 

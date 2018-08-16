@@ -18,6 +18,11 @@
     </UserControl.Resources>
 
 
+    <UserControl.ContextMenu>
+        <ContextMenu>
+            <MenuItem Header="Delete" Click="ContextMenuDeleteClick"></MenuItem>
+        </ContextMenu>
+    </UserControl.ContextMenu>
 
 
     <TextBlock Name="ClassTextBox" Text="Класс"></TextBlock>

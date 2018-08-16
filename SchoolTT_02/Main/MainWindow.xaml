@@ -4,18 +4,40 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SchoolTT_02"
-        xmlns:Table="clr-namespace:SchoolTT_02.Table" x:Class="SchoolTT_02.MainWindow"
+        xmlns:Table="clr-namespace:SchoolTT_02.Table" x:Class="SchoolTT_02.Main.MainWindow"
         mc:Ignorable="d"
         Title="MainWindow" >
+
+
+
+    <Window.Resources>
+        <Style TargetType="Button">
+            <Setter Property="FontFamily" Value="Verdana" />
+            <Setter Property="Background" Value="SkyBlue" />
+            <Setter Property="BorderThickness" Value="0" />
+            <Setter Property="Foreground" Value="White" />
+            <Setter Property="VerticalContentAlignment" Value="Center" />
+            <Setter Property="HorizontalContentAlignment" Value="Center" />
+        </Style>
+    </Window.Resources>
+
+
+
+
 
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition></ColumnDefinition>
             <ColumnDefinition MaxWidth="200"></ColumnDefinition>
         </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition></RowDefinition>
+            <RowDefinition Height="40"></RowDefinition>
+        </Grid.RowDefinitions>
 
-        <Table:Table Grid.Column="0"/>
-        <ListBox Name="CardListBox" Grid.Column="1"></ListBox>
+        <Table:Table Grid.Column="0" Grid.RowSpan="2"/>
+        <ListBox Name="CardListBox" Grid.Row="0" Grid.Column="1" HorizontalContentAlignment="Stretch" Margin="10,10,10,0" BorderThickness="3,3,3,0" BorderBrush="SkyBlue" Background="AliceBlue"></ListBox>
+        <Button Grid.Row="1" Grid.Column="1" Margin="10,0,10,10" Click="CreateCardClick">Добавить карточку</Button>
     </Grid>
     
     

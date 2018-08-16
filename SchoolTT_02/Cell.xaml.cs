@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -24,5 +26,34 @@ namespace SchoolTT_02
         {
             InitializeComponent();
         }
+
+
+        //<Поля и свойства>----------------
+        private string _xname;//Название класса
+        public string XName
+        {
+            get => _xname;
+            set
+            {
+                _xname = value;
+                CellClassTextBox.Text = value;
+            }
+        }
+        //</Поля и свойства>----------------
+
+
+
+        //<Обработчики>----------------
+        
+        //</Обработчики>----------------
+
+
+
+        //<Методы>----------------
+        //</Методы>----------------
+
+
+        //<События>----------------
+        //</События>----------------
     }
 }

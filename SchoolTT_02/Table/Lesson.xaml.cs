@@ -56,7 +56,13 @@ namespace SchoolTT_02.Table
         protected virtual void OnLessonDeleted()
         {
             LessonDeleted?.Invoke(this, EventArgs.Empty);
-        }
+        }//Запуск события
         //</Методы>----------------
+
+
+
+        //<События>----------------
+
+        //</События>----------------
     }
 }

@@ -20,11 +20,11 @@ namespace SchoolTT_02.Table
         public Table()
         {
             InitializeComponent();
-            Add(new Class(), TableGrid.ColumnDefinitions.Count);
-            Add(new Class(), TableGrid.ColumnDefinitions.Count);
-            Add(new Class(), TableGrid.ColumnDefinitions.Count);
-            Add(new Class(), TableGrid.ColumnDefinitions.Count);
-            Add(new Class(), TableGrid.ColumnDefinitions.Count);
+            Add(new Class() { XName = "1A" }, TableGrid.ColumnDefinitions.Count);
+            Add(new Class() { XName = "2Б" }, TableGrid.ColumnDefinitions.Count);
+            Add(new Class() { XName = "3В" }, TableGrid.ColumnDefinitions.Count);
+            Add(new Class() { XName = "4Г" }, TableGrid.ColumnDefinitions.Count);
+            Add(new Class() { XName = "5Д" }, TableGrid.ColumnDefinitions.Count);
             Add(new Day(), TableGrid.RowDefinitions.Count);
             Add(new Day(), TableGrid.RowDefinitions.Count);
             Add(new Day(), TableGrid.RowDefinitions.Count);
@@ -56,9 +56,7 @@ namespace SchoolTT_02.Table
             pLesson.LessonDeleted += DeleteLessonRow;
             Grid.SetRow(pLesson, pPlace);
             Grid.SetColumn(pLesson, СLessonPlace);
-            AddCellsToRow(pPlace, pLesson);
-            //pLesson.Number= 34;
-            //pLesson.Na
+            AddCellsToRow(pPlace, pLesson); 
         }
 
         private void Add(Day pDay, int pPlace)//Добавление дня в список и создание новой строки
@@ -68,20 +66,14 @@ namespace SchoolTT_02.Table
             Grid.SetRow(pDay, pPlace);
             pDay.LessonAdded += Add;
             pDay.LessonAdded += (s,e) => Grid.SetRowSpan(pDay, pDay.LessonList.Count);
-
-            //var newLesson = new Lesson();
-            //newLesson.LessonDeleted += (s, e) => Grid.SetRowSpan(pDay, pDay.LessonList.Count);
-            //pDay.LessonList.Add(newLesson);
-            //Add(newLesson, pPlace);
-            //pDay.RenameLessons();
-
-            TableGrid.RowDefinitions.Add(new RowDefinition(){ MinHeight = СMinHeight });
+            pDay.Add(new Lesson());
             TableGrid.RowDefinitions.Add(new RowDefinition(){Height = new GridLength(СSeparatorHeight) });
         }
 
         private void Add(Class pClass, int pPlace)//Добавление класса в список и создание нового столбца
         {
             this._classList.Add(pClass);
+            pClass.ClassDeleted += DeleteClassColumn;
             TableGrid.ColumnDefinitions.Add(new ColumnDefinition(){MinWidth = СMinWidth});
             TableGrid.Children.Add(pClass);
             Grid.SetColumn(pClass, pPlace);
@@ -111,12 +103,25 @@ namespace SchoolTT_02.Table
             }
         }
 
+        private void MoveColumns(int pStart, int pDirection)//Смещает все элементы таблицы, которые находятся правее столбца с номером pStart, на pDirection строк
+        {
+            foreach (var element in TableGrid.Children)
+            {
+                var place = Grid.GetColumn((UIElement)element);
+                if (place > pStart)
+                {
+                    Grid.SetColumn((UIElement)element, place + pDirection);
+                }
+            }
+        }
+
         private void AddCellsToRow(int pPlace, Lesson pLesson)//Добавляет ячейки в строку на месте pPlace и записывает их списки ячеек соответствующих Class и Lesson 
         {
-            int i = 2;
-            foreach (Class Class in _classList)
+            var i = 2;
+            foreach (var Class in _classList)
             {
-                Cell newCell = new Cell();
+                var newCell = new Cell();
+                BindCellToClass(Class, newCell);
                 TableGrid.Children.Add(newCell);
                 pLesson.CellList.Add(newCell);
                 Class.CellList.Add(newCell);
@@ -135,6 +140,7 @@ namespace SchoolTT_02.Table
                     {
                         i++;
                         Cell newCell = new Cell();
+                        BindCellToClass(pClass, newCell);
                         TableGrid.Children.Add(newCell);
                         pClass.CellList.Add(newCell);
                         lesson.CellList.Add(newCell);
@@ -146,12 +152,45 @@ namespace SchoolTT_02.Table
             
         }
 
-        private void DeleteCellsFromRow(int pPlace, Lesson pLesson)//
+        private void DeleteCellsFromRow(int pPlace, Lesson pLesson)//Удаляет все ячейки из строки
         {
             foreach (var cell in pLesson.CellList)
             {
                 TableGrid.Children.Remove(cell);
             }
+        }
+
+        private void DeleteCellsFromColumn(int pPlace, Class pClass)//Удаляет все ячейки из столбца
+        {
+            foreach (var cell in pClass.CellList)
+            {
+                TableGrid.Children.Remove(cell);
+            }
+        }
+
+        private void DeleteClassFromList(Class pClass)//Удаляет класс из списка классов
+        {
+            var indexForDelete = _classList.IndexOf(pClass);
+            for (var i = indexForDelete; i < _classList.Count - 1; i++)
+            {
+                _classList[i] = _classList[i + 1];
+            }
+
+            _classList[_classList.Count - 1] = pClass;
+            _classList.Remove(pClass);
+
+        }
+
+        private static void BindCellToClass(Class pClass, Cell pCell)
+        {
+            var binding = new Binding
+            {
+                Source = pClass.ClassTextBox,
+                Path = new PropertyPath("Text"),
+                Mode = BindingMode.Default
+            };
+            BindingOperations.SetBinding(pCell.CellClassTextBox, TextBlock.TextProperty, binding);
+
         }
         //</Методы>----------------
 
@@ -168,10 +207,11 @@ namespace SchoolTT_02.Table
             Add(new Day(), TableGrid.RowDefinitions.Count);
         }//Обработчик нажатия кнопки добавления дня
 
-        private void DeleteLessonRow(object sender, EventArgs e)//Вызывается при обработке событие LessonDeleted(Удаление урока из списка дней)
+        private void DeleteLessonRow(object sender, EventArgs e)//Вызывается при обработке событие LessonDeleted(Удаление урока из списка)
         {
             var lesson = (Lesson)sender;
             var place = Grid.GetRow(lesson);
+            TableGrid.RowDefinitions.RemoveAt(Grid.GetRow(lesson));
             TableGrid.Children.Remove(lesson);
             DeleteCellsFromRow(place, lesson);
             MoveRows(place, -1);
@@ -179,11 +219,24 @@ namespace SchoolTT_02.Table
             {
                 day.RenameLessons();
             }
-            //MoveRows(place, -1);
-            //TableGrid.RowDefinitions.Insert(place, new RowDefinition() { MinHeight = СMinHeight });
-            //Grid.SetRowSpan(day, day.LessonList.Count);
-            //Add(lesson, place);
+        }
+
+        private void DeleteClassColumn(object sender, EventArgs e)//Вызывается при обработке событие ClassDeleted(Удаление классв из списка)
+        {
+            var Class = (Class)sender;
+            var place = Grid.GetColumn(Class);
+            DeleteClassFromList(Class);
+            TableGrid.Children.Remove(Class);
+            DeleteCellsFromColumn(place, Class);
+            TableGrid.ColumnDefinitions.RemoveAt(Grid.GetColumn(Class));
+            MoveColumns(place, -1);
         }
         //</Обработчики>----------------
+
+
+
+        //<События>----------------
+
+        //</События>----------------
     }
 }

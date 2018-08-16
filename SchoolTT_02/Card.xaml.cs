@@ -24,18 +24,85 @@ namespace SchoolTT_02
         {
             InitializeComponent();
             DataContext = this;
+            Color = Colors.Blue;
         }
 
+
+
+
+
+        //<Поля и свойства>----------------
         public string FirstName { get; set; }
 
         public string SecondName { get; set; }
 
         public string ThirdName { get; set; }
 
-        public string Class { get; set; }
+        private string _class;
+        public string Class
+        {
+            get => _class;
+            set { _class = value;
+                CardClass.Text = value;
+            }
+        }
 
-        public string Discipline { get; set; }
 
-        public Color Color { get; set; }
+        private string _discipline;
+        public string Discipline
+        {
+            get => _discipline;
+            set
+            {
+                _discipline = value;
+                CardDiscipline.Text = value;
+            }
+        }
+
+
+        private int _count;
+        public int Count
+        {
+            get => _count;
+            set
+            {
+                _count = value;
+                CardCount.Text = value.ToString();
+            }
+        }
+
+
+        private Color _color;
+        public Color Color
+        {
+            get => _color;
+            set
+            {
+                _color = value;
+                this.Background = new SolidColorBrush(value);
+            }
+        }
+        //</Поля и свойства>----------------
+
+
+
+        //<События>----------------
+
+        //</События>----------------
+
+
+
+        //<Обработчики>----------------
+
+        //</Обработчики>----------------
+
+
+
+        //<Методы>----------------
+        public void Edit()
+        {
+           
+        }
+        //</Методы>----------------
     }
 }
