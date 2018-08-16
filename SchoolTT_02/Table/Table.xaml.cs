@@ -44,7 +44,7 @@ namespace SchoolTT_02.Table
         //</Поля и свойства>----------------
         private readonly List<Day> _dayList = new List<Day>();//Список дней в таблице
 
-        private readonly List<Class> _classList = new List<Class>();//Список классов в таблице
+        public readonly List<Class> ClassList = new List<Class>();//Список классов в таблице
         //</Поля и свойства>----------------
 
 
@@ -72,7 +72,7 @@ namespace SchoolTT_02.Table
 
         private void Add(Class pClass, int pPlace)//Добавление класса в список и создание нового столбца
         {
-            this._classList.Add(pClass);
+            this.ClassList.Add(pClass);
             pClass.ClassDeleted += DeleteClassColumn;
             TableGrid.ColumnDefinitions.Add(new ColumnDefinition(){MinWidth = СMinWidth});
             TableGrid.Children.Add(pClass);
@@ -118,7 +118,7 @@ namespace SchoolTT_02.Table
         private void AddCellsToRow(int pPlace, Lesson pLesson)//Добавляет ячейки в строку на месте pPlace и записывает их списки ячеек соответствующих Class и Lesson 
         {
             var i = 2;
-            foreach (var Class in _classList)
+            foreach (var Class in ClassList)
             {
                 var newCell = new Cell();
                 BindCellToClass(Class, newCell);
@@ -170,14 +170,14 @@ namespace SchoolTT_02.Table
 
         private void DeleteClassFromList(Class pClass)//Удаляет класс из списка классов
         {
-            var indexForDelete = _classList.IndexOf(pClass);
-            for (var i = indexForDelete; i < _classList.Count - 1; i++)
+            var indexForDelete = ClassList.IndexOf(pClass);
+            for (var i = indexForDelete; i < ClassList.Count - 1; i++)
             {
-                _classList[i] = _classList[i + 1];
+                ClassList[i] = ClassList[i + 1];
             }
 
-            _classList[_classList.Count - 1] = pClass;
-            _classList.Remove(pClass);
+            ClassList[ClassList.Count - 1] = pClass;
+            ClassList.Remove(pClass);
 
         }
 

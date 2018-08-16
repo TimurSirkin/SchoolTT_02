@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using SchoolTT_02.Table;
 
 namespace SchoolTT_02
 {
@@ -38,12 +39,12 @@ namespace SchoolTT_02
 
         public string ThirdName { get; set; }
 
-        private string _class;
-        public string Class
+        private Class _class;
+        public Class Class
         {
             get => _class;
             set { _class = value;
-                CardClass.Text = value;
+                CardClass.Text = _class.XName;
             }
         }
 
@@ -106,6 +107,14 @@ namespace SchoolTT_02
         private void ContextMenuEditClick(object sender, RoutedEventArgs e)//Обработчик нажатия пункта меню (редактирование)
         {
             this.Edit();
+        }
+
+        private void CardMouseDown(object sender, MouseButtonEventArgs e)//Обработчик события перетаскивая карточки
+        {
+            Card mMessege = (Card)sender;
+            DataObject data = new DataObject();
+            data.SetData("Object", sender);
+            DragDrop.DoDragDrop(mMessege, data, DragDropEffects.Move);
         }
         //</Обработчики>----------------
 

@@ -11,6 +11,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using SchoolTT_02.Table;
 using WPFColorPickerLib;
 
 namespace SchoolTT_02
@@ -23,7 +24,8 @@ namespace SchoolTT_02
         public EditWindow(Card pCard)
         {
             InitializeComponent();
-            WindowClass.Text = pCard.Class;
+            //WindowClass.ItemsSource = 
+            //WindowClass.SelectedItem = pCard.Class;
             WindowCount.Text = pCard.Count.ToString();
             WindowFirstName.Text = pCard.FirstName;
             WindowSecondName.Text = pCard.SecondName;
@@ -60,8 +62,8 @@ namespace SchoolTT_02
 
         private void AcceptClick(object sender, RoutedEventArgs e)//Кнопка "Принять"
         {
-            _card.Class = WindowClass.Text;
-            _card.Count = Int32.Parse(WindowCount.Text);
+            //_card.Class = WindowClass.SelectedItem;
+            _card.Count = int.Parse(WindowCount.Text);
             _card.FirstName = WindowFirstName.Text;
             _card.SecondName = WindowSecondName.Text;
             _card.ThirdName = WindowThirdName.Text;

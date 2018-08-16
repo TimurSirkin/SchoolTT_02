@@ -39,21 +39,58 @@ namespace SchoolTT_02
                 CellClassTextBox.Text = value;
             }
         }
+
+        private Card _parentCard;
         //</Поля и свойства>----------------
 
 
 
         //<Обработчики>----------------
-        
+        private void CellDrop(object sender, DragEventArgs e)//Обработчик события перетаскивая в ячейку
+        {
+            var card = (Card) e.Data.GetData("Object");
+            var cell = (Cell) sender;
+            if (card != null && (card).Count > 0)
+            {
+                if (cell._parentCard != null)
+                    cell._parentCard.Count++;
+
+                _parentCard = (e.Data.GetData("Object") as Card);
+
+                if (_parentCard != null) _parentCard.Count--;
+
+                var bindingBackground = new Binding
+                {
+                    Source = _parentCard,
+                    Path = new PropertyPath("Background"),
+                    Mode = BindingMode.OneWay
+                };
+                BindingOperations.SetBinding(this, Cell.BackgroundProperty, bindingBackground);
+
+                if (_parentCard == null) return;
+                var bindingDiscipline = new Binding
+                {
+                    Source = _parentCard.CardDiscipline,
+                    Path = new PropertyPath("Text"),
+                    Mode = BindingMode.Default
+                };
+                BindingOperations.SetBinding(this.Discipline, TextBlock.TextProperty, bindingDiscipline);
+            }
+            else
+            {
+                MessageBox.Show("Количество карточек равно нулю!");
+            }
+        }
         //</Обработчики>----------------
 
 
 
-        //<Методы>----------------
-        //</Методы>----------------
+            //<Методы>----------------
+            //</Методы>----------------
 
 
-        //<События>----------------
-        //</События>----------------
+            //<События>----------------
+            //</События>----------------
+        }
     }
-}
+    

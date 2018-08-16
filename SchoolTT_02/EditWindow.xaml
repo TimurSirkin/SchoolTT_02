@@ -23,6 +23,12 @@
             <Setter Property="Foreground" Value="DarkBlue" />
         </Style>
 
+        <Style TargetType="ListBox">
+            <Setter Property="BorderBrush" Value="DarkBlue" />
+        </Style>
+
+
+
     </Window.Resources>
 
 
@@ -35,13 +41,13 @@
             <TextBlock>Отчество:</TextBlock>
             <TextBox   Name="WindowThirdName"></TextBox>
             <TextBlock >Класс:</TextBlock>
-            <TextBox   Name="WindowClass"></TextBox>
+            <ListBox Height="60" Name="WindowClass"></ListBox>
             <TextBlock >Предмет:</TextBlock>
             <TextBox   Name="WindowDiscipline"></TextBox>
             <TextBlock>Количество:</TextBlock>
             <TextBox   Name="WindowCount"></TextBox>
             <TextBlock>Цвет:</TextBlock>
-            <Button Height="20" BorderThickness="0" Click="ColorPickerClick" Name="WindowBackground"></Button>
+            <Button Height="18" BorderThickness="1" Click="ColorPickerClick" Name="WindowBackground"></Button>
 
             <Button IsDefault="True" Click="AcceptClick" FontFamily="Segoe UI Black" Content="Принять" Margin="0,10" ></Button>
         </StackPanel>
