@@ -25,15 +25,36 @@ namespace SchoolTT_02.Main
             InitializeComponent();
         }
 
+
+        //<Поля и свойства>----------------
+        //</Поля и свойства>----------------
+
+
+
+        //<Методы>----------------
+        //</Методы>----------------
+
+
+
+        //<Обработчики>----------------
         private void CreateCardClick(object sender, RoutedEventArgs e)
         {
             var tempCard = new Card();
             CardListBox.Items.Add(tempCard);
-            var editCardWindow = new EditWindow(tempCard);
-            if (editCardWindow.ShowDialog() == true)
-            {
-
-            }
+            tempCard.CardDelete += DeleteCard;
+            tempCard.Edit();
         }
+
+        private void DeleteCard(object sender, EventArgs e)
+        {
+            CardListBox.Items.Remove(((Card)sender));
+        }
+        //</Обработчики>----------------
+
+
+
+        //<События>----------------
+
+        //</События>----------------
     }
 }

@@ -24,19 +24,57 @@ namespace SchoolTT_02
         {
             InitializeComponent();
             WindowClass.Text = pCard.Class;
-            WindowBackground.Background = new SolidColorBrush(pCard.Color);
+            WindowCount.Text = pCard.Count.ToString();
+            WindowFirstName.Text = pCard.FirstName;
+            WindowSecondName.Text = pCard.SecondName;
+            WindowThirdName.Text = pCard.ThirdName;
+            WindowDiscipline.Text = pCard.Discipline;
+            WindowBackground.Background = pCard.Background;
             _card = pCard;
         }
 
-        private Card _card;
+        //<Поля и свойства>----------------
+        private readonly Card _card;
+        //</Поля и свойства>----------------
 
-        private void ColorPickerClick(object sender, RoutedEventArgs e)
+
+
+
+
+
+        //<Методы>----------------
+        //</Методы>----------------
+
+
+
+        //<Обработчики>----------------
+        private void ColorPickerClick(object sender, RoutedEventArgs e)//Выбор цвета
         {
             var colorDialog = new ColorDialog { Owner = this };
             if (colorDialog.ShowDialog() == true)
             {
-                _card.Color = colorDialog.SelectedColor;
+                WindowBackground.Background = new SolidColorBrush(colorDialog.SelectedColor);
+                _card.Color = new SolidColorBrush(colorDialog.SelectedColor);
             }
         }
+
+        private void AcceptClick(object sender, RoutedEventArgs e)//Кнопка "Принять"
+        {
+            _card.Class = WindowClass.Text;
+            _card.Count = Int32.Parse(WindowCount.Text);
+            _card.FirstName = WindowFirstName.Text;
+            _card.SecondName = WindowSecondName.Text;
+            _card.ThirdName = WindowThirdName.Text;
+            _card.Discipline = WindowDiscipline.Text;
+            _card.Background = WindowBackground.Background;
+            this.DialogResult = true;
+        }
+        //</Обработчики>----------------
+
+
+
+        //<События>----------------
+
+        //</События>----------------
     }
 }

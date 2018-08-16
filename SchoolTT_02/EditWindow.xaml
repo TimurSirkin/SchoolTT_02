@@ -43,7 +43,7 @@
             <TextBlock>Цвет:</TextBlock>
             <Button Height="20" BorderThickness="0" Click="ColorPickerClick" Name="WindowBackground"></Button>
 
-            <Button IsDefault="True"  FontFamily="Segoe UI Black" Content="Принять" Margin="0,10" ></Button>
+            <Button IsDefault="True" Click="AcceptClick" FontFamily="Segoe UI Black" Content="Принять" Margin="0,10" ></Button>
         </StackPanel>
     </Grid>
 

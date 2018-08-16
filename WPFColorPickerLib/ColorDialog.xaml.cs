@@ -66,6 +66,11 @@ namespace WPFColorPickerLib
       DialogResult = false;
     }
 
-    #endregion
-  }
+        #endregion
+
+        private void colorPicker_Loaded(object sender, RoutedEventArgs e)
+        {
+
+        }
+    }
 }

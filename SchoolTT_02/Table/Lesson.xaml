@@ -19,7 +19,7 @@
 
     <UserControl.ContextMenu>
         <ContextMenu>
-            <MenuItem Header="Delete" Click="ContextMenuDeleteClick"></MenuItem>
+            <MenuItem Header="Удалить" Click="ContextMenuDeleteClick"></MenuItem>
         </ContextMenu>
     </UserControl.ContextMenu>
 

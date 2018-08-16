@@ -24,7 +24,7 @@ namespace SchoolTT_02
         {
             InitializeComponent();
             DataContext = this;
-            Color = Colors.Blue;
+            Color = Brushes.White;
         }
 
 
@@ -72,14 +72,14 @@ namespace SchoolTT_02
         }
 
 
-        private Color _color;
-        public Color Color
+        private SolidColorBrush _color;
+        public SolidColorBrush Color
         {
             get => _color;
             set
             {
                 _color = value;
-                this.Background = new SolidColorBrush(value);
+                this.Background = value;
             }
         }
         //</Поля и свойства>----------------
@@ -87,22 +87,42 @@ namespace SchoolTT_02
 
 
         //<События>----------------
-
+        public event EventHandler CardDelete;//Событие удаления карточки из ListBox;
         //</События>----------------
 
 
 
         //<Обработчики>----------------
+        private void DoubleClick(object sender, RoutedEventArgs e)//Обработчик двойного нажатия
+        {
+            this.Edit();
+        }
 
+        private void ContextMenuDeleteClick(object sender, RoutedEventArgs e)//Обработчик нажатия пункта меню (удаление)
+        {
+            OnCardDelete();
+        }
+
+        private void ContextMenuEditClick(object sender, RoutedEventArgs e)//Обработчик нажатия пункта меню (редактирование)
+        {
+            this.Edit();
+        }
         //</Обработчики>----------------
 
 
 
         //<Методы>----------------
-        public void Edit()
+        public void Edit()//Вызывает окно редактирования карточки
         {
-           
+            var editCardWindow = new EditWindow(this);
+            if (editCardWindow.ShowDialog() == true) { }
+        }
+
+        protected virtual void OnCardDelete()//Инициализация события
+        {
+            CardDelete?.Invoke(this, EventArgs.Empty);
         }
         //</Методы>----------------
+
     }
 }

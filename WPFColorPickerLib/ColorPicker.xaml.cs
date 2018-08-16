@@ -72,7 +72,6 @@ namespace WPFColorPickerLib
         {
           this.selectedColor = value;
           CreateAlphaLinearBrush();
-          UpdateTextBoxes();
           UpdateInk();
         }
       }
@@ -222,18 +221,6 @@ namespace WPFColorPickerLib
     /// <summary>
     /// Update text box values based on the Selected Color.
     /// </summary>
-    private void UpdateTextBoxes()
-    {
-      txtAlpha.Text = SelectedColor.A.ToString();
-      txtAlphaHex.Text = SelectedColor.A.ToString("X2");
-      txtRed.Text = SelectedColor.R.ToString();
-      txtRedHex.Text = SelectedColor.R.ToString("X2");
-      txtGreen.Text = SelectedColor.G.ToString();
-      txtGreenHex.Text = SelectedColor.G.ToString("X2");
-      txtBlue.Text = SelectedColor.B.ToString();
-      txtBlueHex.Text = SelectedColor.B.ToString("X2");
-      txtAll.Text = String.Format("#{0}{1}{2}{3}", txtAlphaHex.Text, txtRedHex.Text, txtGreenHex.Text, txtBlueHex.Text);
-    }
 
     /// <summary>
     /// Updates the Ink strokes based on the Selected Color.
@@ -243,11 +230,6 @@ namespace WPFColorPickerLib
       drawingAttributes.Color = SelectedColor;
       drawingAttributes.StylusTip = StylusTip.Ellipse;
       drawingAttributes.Width = 5;
-      // Update drawing attributes on previewPresenter
-      foreach (Stroke s in previewPresenter.Strokes)
-      {
-        s.DrawingAttributes = drawingAttributes;
-      }
     }
 
     #endregion // Update Methods
