@@ -17,15 +17,20 @@ using WPFColorPickerLib;
 namespace SchoolTT_02
 {
     /// <summary>
-    /// Логика взаимодействия для EditWindow.xaml
+    /// Логика взаимодействия для EditCardWindow.xaml
     /// </summary>
-    public partial class EditWindow : Window
+    public partial class EditCardWindow : Window
     {
-        public EditWindow(Card pCard)
+        public EditCardWindow(Card pCard, List<Class> pClassList)
         {
             InitializeComponent();
-            //WindowClass.ItemsSource = 
-            //WindowClass.SelectedItem = pCard.Class;
+            _classList = pClassList;
+            foreach (var Class in pClassList)
+            {
+                WindowClass.Items.Add(Class.XName);
+            }
+            if (pCard.Class != null)
+                WindowClass.SelectedIndex = pClassList.IndexOf(pCard.Class);
             WindowCount.Text = pCard.Count.ToString();
             WindowFirstName.Text = pCard.FirstName;
             WindowSecondName.Text = pCard.SecondName;
@@ -36,11 +41,13 @@ namespace SchoolTT_02
         }
 
         //<Поля и свойства>----------------
+        private readonly List<Class> _classList;
+
         private readonly Card _card;
         //</Поля и свойства>----------------
 
 
-
+        
 
 
 
@@ -62,14 +69,30 @@ namespace SchoolTT_02
 
         private void AcceptClick(object sender, RoutedEventArgs e)//Кнопка "Принять"
         {
-            //_card.Class = WindowClass.SelectedItem;
             _card.Count = int.Parse(WindowCount.Text);
             _card.FirstName = WindowFirstName.Text;
             _card.SecondName = WindowSecondName.Text;
             _card.ThirdName = WindowThirdName.Text;
             _card.Discipline = WindowDiscipline.Text;
             _card.Background = WindowBackground.Background;
+            if (WindowClass.SelectedIndex != -1)
+            _card.Class = _classList[WindowClass.SelectedIndex];
             this.DialogResult = true;
+        }
+
+        private void WindowCount_OnTextChanged(object sender, TextChangedEventArgs e)
+        {
+            var textBox = sender as TextBox;
+
+            if (textBox != null && Int32.TryParse(textBox.Text, out _) == false)
+            {
+                TextChange textChange = e.Changes.ElementAt<TextChange>(0);
+                int iAddedLength = textChange.AddedLength;
+                int iOffset = textChange.Offset;
+
+                textBox.Text = textBox.Text.Remove(iOffset, iAddedLength);
+                textBox.SelectionStart = iOffset;
+            }
         }
         //</Обработчики>----------------
 

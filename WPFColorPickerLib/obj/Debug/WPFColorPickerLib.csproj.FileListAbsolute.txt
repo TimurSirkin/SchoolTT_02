@@ -14,7 +14,6 @@ F:\Downloads\WPFColorPicker\WPFColorPicker\WPFColorPickerLib\obj\Debug\WPFColorP
 F:\Downloads\WPFColorPicker\WPFColorPicker\WPFColorPickerLib\obj\Debug\WPFColorPickerLib.csproj.CoreCompileInputs.cache
 F:\Downloads\WPFColorPicker\WPFColorPicker\WPFColorPickerLib\obj\Debug\WPFColorPickerLib.dll
 F:\Downloads\WPFColorPicker\WPFColorPicker\WPFColorPickerLib\obj\Debug\WPFColorPickerLib.pdb
-C:\Users\SWS\Documents\GitHub\SchoolTT_02\WPFColorPickerLib\obj\Debug\WPFColorPickerLib.csprojAssemblyReference.cache
 C:\Users\SWS\Documents\GitHub\SchoolTT_02\WPFColorPickerLib\obj\Debug\ColorPicker.baml
 C:\Users\SWS\Documents\GitHub\SchoolTT_02\WPFColorPickerLib\obj\Debug\ColorDialog.g.cs
 C:\Users\SWS\Documents\GitHub\SchoolTT_02\WPFColorPickerLib\obj\Debug\ColorPicker.g.cs

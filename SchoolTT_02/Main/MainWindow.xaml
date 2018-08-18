@@ -35,7 +35,7 @@
             <RowDefinition Height="40"></RowDefinition>
         </Grid.RowDefinitions>
 
-        <Table:Table Grid.Column="0" Grid.RowSpan="2"/>
+        <Table:CardTable x:Name="MainTable" Grid.Column="0" Grid.RowSpan="2"/>
         <ListBox Name="CardListBox" Grid.Row="0" Grid.Column="1" HorizontalContentAlignment="Stretch" Margin="10,10,10,0" BorderThickness="3,3,3,0" BorderBrush="SkyBlue" Background="AliceBlue"></ListBox>
         <Button Grid.Row="1" Grid.Column="1" Margin="10,0,10,10" Click="CreateCardClick">Добавить карточку</Button>
     </Grid>

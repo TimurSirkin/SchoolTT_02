@@ -14,6 +14,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using SchoolTT_02.Table;
 
 namespace SchoolTT_02
 {
@@ -40,6 +41,8 @@ namespace SchoolTT_02
             }
         }
 
+        public Class Class;
+
         private Card _parentCard;
         //</Поля и свойства>----------------
 
@@ -50,7 +53,13 @@ namespace SchoolTT_02
         {
             var card = (Card) e.Data.GetData("Object");
             var cell = (Cell) sender;
-            if (card != null && (card).Count > 0)
+            if (card == null || card.Class != cell.Class)
+            {
+                MessageBox.Show("Класс карточки и ячейки не совпадает");
+                return;
+            }
+
+            if ((card).Count > 0)
             {
                 if (cell._parentCard != null)
                     cell._parentCard.Count++;

@@ -14,6 +14,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using SchoolTT_02.EditWindows;
 
 namespace SchoolTT_02.Table
 {
@@ -22,6 +23,7 @@ namespace SchoolTT_02.Table
         public Class()
         {
             InitializeComponent();
+            XName = "Класс";
         }
 
 
@@ -46,6 +48,11 @@ namespace SchoolTT_02.Table
         {
             OnClassDeleted();
         }//Обработчик нажатия на кнопку удаления урока
+
+        private void ContextMenuEditClick(object sender, RoutedEventArgs e)
+        {
+            Edit();
+        }
         //</Обработчики>----------------
 
 
@@ -55,11 +62,24 @@ namespace SchoolTT_02.Table
         {
             ClassDeleted?.Invoke(this, EventArgs.Empty);
         }
+
+        public void Edit() //Вызывает окно редактирования класса
+        {
+            var editClassWindow = new EditClassWindow(this);
+            if (editClassWindow.ShowDialog() == true)
+            {
+
+            }
+        }
         //</Методы>----------------
 
 
         //<События>----------------
         public event EventHandler ClassDeleted;
         //</События>----------------
+        private void Class_OnMouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            Edit();
+        }
     }
 }

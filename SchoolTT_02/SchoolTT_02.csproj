@@ -60,8 +60,11 @@
     <Compile Include="Cell.xaml.cs">
       <DependentUpon>Cell.xaml</DependentUpon>
     </Compile>
-    <Compile Include="EditWindow.xaml.cs">
-      <DependentUpon>EditWindow.xaml</DependentUpon>
+    <Compile Include="EditWindows\EditCardWindow.xaml.cs">
+      <DependentUpon>EditCardWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="EditWindows\EditClassWindow.xaml.cs">
+      <DependentUpon>EditClassWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Table\Class.xaml.cs">
       <DependentUpon>Class.xaml</DependentUpon>
@@ -72,8 +75,8 @@
     <Compile Include="Table\Lesson.xaml.cs">
       <DependentUpon>Lesson.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Table\Table.xaml.cs">
-      <DependentUpon>Table.xaml</DependentUpon>
+    <Compile Include="Table\CardTable.xaml.cs">
+      <DependentUpon>CardTable.xaml</DependentUpon>
     </Compile>
     <Page Include="Card.xaml">
       <SubType>Designer</SubType>
@@ -83,7 +86,11 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="EditWindow.xaml">
+    <Page Include="EditWindows\EditCardWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="EditWindows\EditClassWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -111,7 +118,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Table\Table.xaml">
+    <Page Include="Table\CardTable.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

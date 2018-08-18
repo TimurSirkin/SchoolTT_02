@@ -24,7 +24,6 @@ C:\Users\SWS\Documents\GitHub\SchoolTT_02\SchoolTT_02\obj\Debug\Main\MainWindow.
 C:\Users\SWS\Documents\GitHub\SchoolTT_02\SchoolTT_02\obj\Debug\Table\Class.g.cs
 C:\Users\SWS\Documents\GitHub\SchoolTT_02\SchoolTT_02\obj\Debug\Table\Day.g.cs
 C:\Users\SWS\Documents\GitHub\SchoolTT_02\SchoolTT_02\obj\Debug\Table\Lesson.g.cs
-C:\Users\SWS\Documents\GitHub\SchoolTT_02\SchoolTT_02\obj\Debug\Table\Table.g.cs
 C:\Users\SWS\Documents\GitHub\SchoolTT_02\SchoolTT_02\obj\Debug\Main\App.g.cs
 C:\Users\SWS\Documents\GitHub\SchoolTT_02\SchoolTT_02\obj\Debug\GeneratedInternalTypeHelper.g.cs
 C:\Users\SWS\Documents\GitHub\SchoolTT_02\SchoolTT_02\obj\Debug\SchoolTT_02_MarkupCompile.cache
@@ -38,7 +37,6 @@ C:\Users\SWS\Documents\GitHub\SchoolTT_02\SchoolTT_02\obj\Debug\Main\MainWindow.
 C:\Users\SWS\Documents\GitHub\SchoolTT_02\SchoolTT_02\obj\Debug\Table\Class.baml
 C:\Users\SWS\Documents\GitHub\SchoolTT_02\SchoolTT_02\obj\Debug\Table\Day.baml
 C:\Users\SWS\Documents\GitHub\SchoolTT_02\SchoolTT_02\obj\Debug\Table\Lesson.baml
-C:\Users\SWS\Documents\GitHub\SchoolTT_02\SchoolTT_02\obj\Debug\Table\Table.baml
 C:\Users\SWS\Documents\GitHub\SchoolTT_02\SchoolTT_02\obj\Debug\SchoolTT_02.g.resources
 C:\Users\SWS\Documents\GitHub\SchoolTT_02\SchoolTT_02\obj\Debug\SchoolTT_02.Properties.Resources.resources
 C:\Users\SWS\Documents\GitHub\SchoolTT_02\SchoolTT_02\obj\Debug\SchoolTT_02.csproj.GenerateResource.cache
@@ -51,5 +49,9 @@ C:\Users\SWS\Documents\GitHub\SchoolTT_02\SchoolTT_02\bin\Debug\WPFColorPickerLi
 C:\Users\SWS\Documents\GitHub\SchoolTT_02\SchoolTT_02\bin\Debug\WPFColorPickerLib.pdb
 C:\Users\SWS\Documents\GitHub\SchoolTT_02\SchoolTT_02\obj\Debug\SchoolTT_02.csprojAssemblyReference.cache
 C:\Users\SWS\Documents\GitHub\SchoolTT_02\SchoolTT_02\obj\Debug\SchoolTT_02.csproj.CopyComplete
-C:\Users\SWS\Documents\GitHub\SchoolTT_02\SchoolTT_02\obj\Debug\EditWindow.g.cs
-C:\Users\SWS\Documents\GitHub\SchoolTT_02\SchoolTT_02\obj\Debug\EditWindow.baml
+C:\Users\SWS\Documents\GitHub\SchoolTT_02\SchoolTT_02\obj\Debug\Table\CardTable.g.cs
+C:\Users\SWS\Documents\GitHub\SchoolTT_02\SchoolTT_02\obj\Debug\Table\CardTable.baml
+C:\Users\SWS\Documents\GitHub\SchoolTT_02\SchoolTT_02\obj\Debug\EditWindows\EditCardWindow.g.cs
+C:\Users\SWS\Documents\GitHub\SchoolTT_02\SchoolTT_02\obj\Debug\EditWindows\EditCardWindow.baml
+C:\Users\SWS\Documents\GitHub\SchoolTT_02\SchoolTT_02\obj\Debug\EditWindows\EditClassWindow.g.cs
+C:\Users\SWS\Documents\GitHub\SchoolTT_02\SchoolTT_02\obj\Debug\EditWindows\EditClassWindow.baml

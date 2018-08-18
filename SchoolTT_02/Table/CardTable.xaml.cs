@@ -15,9 +15,9 @@ using System.Windows.Shapes;
 
 namespace SchoolTT_02.Table
 {
-    public partial class Table : UserControl
+    public partial class CardTable : UserControl
     {
-        public Table()
+        public CardTable()
         {
             InitializeComponent();
             Add(new Class() { XName = "1A" }, TableGrid.ColumnDefinitions.Count);
@@ -178,11 +178,12 @@ namespace SchoolTT_02.Table
 
             ClassList[ClassList.Count - 1] = pClass;
             ClassList.Remove(pClass);
-
+            pClass = null;
         }
 
-        private static void BindCellToClass(Class pClass, Cell pCell)
+        private static void BindCellToClass(Class pClass, Cell pCell)//Присваивает ячейке класс соответствующего столбца
         {
+            pCell.Class = pClass;
             var binding = new Binding
             {
                 Source = pClass.ClassTextBox,

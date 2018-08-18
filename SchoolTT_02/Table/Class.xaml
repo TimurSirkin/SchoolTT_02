@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:SchoolTT_02.Table"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800" Background="SkyBlue" BorderBrush="White" BorderThickness="2">
+             d:DesignHeight="450" d:DesignWidth="800" Background="SkyBlue" BorderBrush="White" BorderThickness="2" MouseDoubleClick="Class_OnMouseDoubleClick">
 
     <UserControl.Resources>
         <Style TargetType="TextBlock">
@@ -20,7 +20,8 @@
 
     <UserControl.ContextMenu>
         <ContextMenu>
-            <MenuItem Header="Delete" Click="ContextMenuDeleteClick"></MenuItem>
+            <MenuItem Header="Удалить" Click="ContextMenuDeleteClick"></MenuItem>
+            <MenuItem Header="Редактировать" Click="ContextMenuEditClick"></MenuItem>
         </ContextMenu>
     </UserControl.ContextMenu>
 

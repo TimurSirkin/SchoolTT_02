@@ -21,11 +21,11 @@ namespace SchoolTT_02
     /// </summary>
     public partial class Card : UserControl
     {
-        public Card()
+        public Card(List<Class> pClassList)
         {
             InitializeComponent();
-            DataContext = this;
             Color = Brushes.White;
+            ClassList = pClassList;
         }
 
 
@@ -33,23 +33,58 @@ namespace SchoolTT_02
 
 
         //<Поля и свойства>----------------
-        public string FirstName { get; set; }
+        public List<Class> ClassList;
 
-        public string SecondName { get; set; }
+        public string FirstName
+        {
+            get => _firstName;
+            set
+            { _firstName = value;
+                TtCardFirstName.Text = value;
+            }
+        }
 
-        public string ThirdName { get; set; }
+        public string SecondName
+        {
+            get => _secondName;
+            set
+            {
+                _secondName = value;
+                TtCardSecondName.Text = value;
+            }
+        }
+
+        public string ThirdName
+        {
+            get => _thirdName;
+            set
+            {
+                _thirdName = value;
+                TtCardThirdName.Text = value;
+            }
+        }
 
         private Class _class;
+
         public Class Class
         {
             get => _class;
-            set { _class = value;
-                CardClass.Text = _class.XName;
+            set
+            {
+                _class = value;
+                var binding = new Binding
+                {
+                    Source = Class.ClassTextBox,
+                    Path = new PropertyPath("Text"),
+                    Mode = BindingMode.Default
+                };
+                BindingOperations.SetBinding(this.CardClass, TextBlock.TextProperty, binding);
             }
         }
 
 
         private string _discipline;
+
         public string Discipline
         {
             get => _discipline;
@@ -62,6 +97,7 @@ namespace SchoolTT_02
 
 
         private int _count;
+
         public int Count
         {
             get => _count;
@@ -74,6 +110,10 @@ namespace SchoolTT_02
 
 
         private SolidColorBrush _color;
+        private string _firstName;
+        private string _secondName;
+        private string _thirdName;
+
         public SolidColorBrush Color
         {
             get => _color;
@@ -88,28 +128,28 @@ namespace SchoolTT_02
 
 
         //<События>----------------
-        public event EventHandler CardDelete;//Событие удаления карточки из ListBox;
+        public event EventHandler CardDelete; //Событие удаления карточки из ListBox;
         //</События>----------------
 
 
 
         //<Обработчики>----------------
-        private void DoubleClick(object sender, RoutedEventArgs e)//Обработчик двойного нажатия
+        private void DoubleClick(object sender, RoutedEventArgs e) //Обработчик двойного нажатия
         {
             this.Edit();
         }
 
-        private void ContextMenuDeleteClick(object sender, RoutedEventArgs e)//Обработчик нажатия пункта меню (удаление)
+        private void ContextMenuDeleteClick(object sender, RoutedEventArgs e) //Обработчик нажатия пункта меню (удаление)
         {
             OnCardDelete();
         }
 
-        private void ContextMenuEditClick(object sender, RoutedEventArgs e)//Обработчик нажатия пункта меню (редактирование)
+        private void ContextMenuEditClick(object sender, RoutedEventArgs e) //Обработчик нажатия пункта меню (редактирование)
         {
             this.Edit();
         }
 
-        private void CardMouseDown(object sender, MouseButtonEventArgs e)//Обработчик события перетаскивая карточки
+        private void CardMouseDown(object sender, MouseButtonEventArgs e) //Обработчик события перетаскивая карточки
         {
             Card mMessege = (Card)sender;
             DataObject data = new DataObject();
@@ -121,13 +161,16 @@ namespace SchoolTT_02
 
 
         //<Методы>----------------
-        public void Edit()//Вызывает окно редактирования карточки
+        public void Edit() //Вызывает окно редактирования карточки
         {
-            var editCardWindow = new EditWindow(this);
-            if (editCardWindow.ShowDialog() == true) { }
+            var editCardWindow = new EditCardWindow(this, ClassList);
+            if (editCardWindow.ShowDialog() == true)
+            {
+
+            }
         }
 
-        protected virtual void OnCardDelete()//Инициализация события
+        protected virtual void OnCardDelete() //Инициализация события
         {
             CardDelete?.Invoke(this, EventArgs.Empty);
         }
