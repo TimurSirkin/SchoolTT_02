@@ -42,6 +42,28 @@ namespace SchoolTT_02.Main
             var tempCard = new Card(MainTable.ClassList) {FirstName = pFirstName, SecondName = pSecondName, ThirdName = pThirdName, Class = MainTable.ClassList[pClass], Color = pColor, Count = pCount, Discipline = pDiscipline};
             CardListBox.Items.Add(tempCard);
             tempCard.CardDelete += DeleteCard;
+            tempCard.CardCaptured += CardCaptured;
+            tempCard.CardDropped += CardDropped;
+        }
+
+        private void ShowTrueClass(Class pClass)//Отключает все ячейки, не соответствующие pClass
+        {
+            foreach (var obj in MainTable.TableGrid.Children)
+            {
+                switch (obj)
+                {
+                    case Cell cell when cell.Class != pClass:
+                        cell.AllowDrop = false;
+                        break;
+                    case Cell cell:
+                        cell.BorderBrush = Brushes.Black;
+                        break;
+                    case Class _:
+                        if ((Class)obj == pClass)
+                            ((Class)obj).BorderBrush = Brushes.Black;
+                        break;
+                }
+            }
         }
         //</Методы>----------------
 
@@ -51,6 +73,9 @@ namespace SchoolTT_02.Main
         private void CreateCardClick(object sender, RoutedEventArgs e)
         {
             var tempCard = new Card(MainTable.ClassList);
+            tempCard.CardDelete += DeleteCard;
+            tempCard.CardCaptured += CardCaptured;
+            tempCard.CardDropped += CardDropped;
             CardListBox.Items.Add(tempCard);
             tempCard.Edit();
         }
@@ -58,6 +83,28 @@ namespace SchoolTT_02.Main
         private void DeleteCard(object sender, EventArgs e)
         {
             CardListBox.Items.Remove(((Card)sender));
+        }
+
+        private void CardCaptured(object sender, EventArgs e)
+        {
+            ShowTrueClass(((Card)sender).Class);
+        }
+
+        private void CardDropped(object sender, EventArgs e)
+        {
+            foreach (var obj in MainTable.TableGrid.Children)
+            {
+                if (obj is Cell)
+                {
+                    var cell = (Cell)obj;
+                    cell.AllowDrop = true;
+                    cell.BorderBrush = Brushes.SkyBlue;
+                }
+                if (obj is Class)
+                {
+                    ((Class)obj).BorderBrush = Brushes.White;
+                }
+            }
         }
         //</Обработчики>----------------
 

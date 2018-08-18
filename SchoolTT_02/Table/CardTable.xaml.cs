@@ -178,7 +178,7 @@ namespace SchoolTT_02.Table
 
             ClassList[ClassList.Count - 1] = pClass;
             ClassList.Remove(pClass);
-            pClass = null;
+            pClass.XName="";
         }
 
         private static void BindCellToClass(Class pClass, Cell pCell)//Присваивает ячейке класс соответствующего столбца
@@ -220,6 +220,11 @@ namespace SchoolTT_02.Table
             {
                 day.RenameLessons();
             }
+            foreach (var obj in lesson.CellList)
+            {
+                if (obj.Card != null)
+                    obj.Card.Count++;
+            }
         }
 
         private void DeleteClassColumn(object sender, EventArgs e)//Вызывается при обработке событие ClassDeleted(Удаление классв из списка)
@@ -231,6 +236,11 @@ namespace SchoolTT_02.Table
             DeleteCellsFromColumn(place, Class);
             TableGrid.ColumnDefinitions.RemoveAt(Grid.GetColumn(Class));
             MoveColumns(place, -1);
+            foreach (var obj in Class.CellList)
+            {
+                if(obj.Card!=null)
+                    obj.Card.Count++;
+            }
         }
         //</Обработчики>----------------
 

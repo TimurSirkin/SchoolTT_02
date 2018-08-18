@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -63,7 +64,6 @@ namespace SchoolTT_02
             if (colorDialog.ShowDialog() == true)
             {
                 WindowBackground.Background = new SolidColorBrush(colorDialog.SelectedColor);
-                _card.Color = new SolidColorBrush(colorDialog.SelectedColor);
             }
         }
 
@@ -77,6 +77,7 @@ namespace SchoolTT_02
             _card.Background = WindowBackground.Background;
             if (WindowClass.SelectedIndex != -1)
             _card.Class = _classList[WindowClass.SelectedIndex];
+            this.Closing -= EditCardWindow_OnClosing;
             this.DialogResult = true;
         }
 
@@ -94,6 +95,16 @@ namespace SchoolTT_02
                 textBox.SelectionStart = iOffset;
             }
         }
+
+        private void EditCardWindow_OnClosing(object sender, CancelEventArgs e)
+        {
+            if (MessageBox.Show("Изменения не будут сохранены." + "\n" +
+                                    "Выйти из режима редактирования?",
+                        "Подтверждение", MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.No)
+            {
+                e.Cancel = true;
+            }
+        }
         //</Обработчики>----------------
 
 
@@ -101,5 +112,6 @@ namespace SchoolTT_02
         //<События>----------------
 
         //</События>----------------
+        
     }
 }

@@ -43,7 +43,7 @@ namespace SchoolTT_02
 
         public Class Class;
 
-        private Card _parentCard;
+        public Card Card;
         //</Поля и свойства>----------------
 
 
@@ -53,33 +53,28 @@ namespace SchoolTT_02
         {
             var card = (Card) e.Data.GetData("Object");
             var cell = (Cell) sender;
-            if (card == null || card.Class != cell.Class)
-            {
-                MessageBox.Show("Класс карточки и ячейки не совпадает");
-                return;
-            }
 
             if ((card).Count > 0)
             {
-                if (cell._parentCard != null)
-                    cell._parentCard.Count++;
+                if (cell.Card != null)
+                    cell.Card.Count++;
 
-                _parentCard = (e.Data.GetData("Object") as Card);
+                Card = (e.Data.GetData("Object") as Card);
 
-                if (_parentCard != null) _parentCard.Count--;
+                if (Card != null) Card.Count--;
 
                 var bindingBackground = new Binding
                 {
-                    Source = _parentCard,
+                    Source = Card,
                     Path = new PropertyPath("Background"),
                     Mode = BindingMode.OneWay
                 };
                 BindingOperations.SetBinding(this, Cell.BackgroundProperty, bindingBackground);
 
-                if (_parentCard == null) return;
+                if (Card == null) return;
                 var bindingDiscipline = new Binding
                 {
-                    Source = _parentCard.CardDiscipline,
+                    Source = Card.CardDiscipline,
                     Path = new PropertyPath("Text"),
                     Mode = BindingMode.Default
                 };
@@ -94,12 +89,13 @@ namespace SchoolTT_02
 
 
 
-            //<Методы>----------------
-            //</Методы>----------------
+        //<Методы>----------------
+        //</Методы>----------------
 
 
-            //<События>----------------
-            //</События>----------------
-        }
+        //<События>----------------
+        //</События>----------------
+
+    }
     }
     

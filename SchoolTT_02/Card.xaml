@@ -5,7 +5,8 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:SchoolTT_02"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800"  Height="80" Padding="10" HorizontalAlignment="Stretch" MouseDoubleClick="DoubleClick" MouseLeftButtonDown="CardMouseDown" BorderBrush="Black" BorderThickness="2">
+             d:DesignHeight="450" d:DesignWidth="800"  Height="80" Padding="10" HorizontalAlignment="Stretch" 
+             MouseDoubleClick="DoubleClick" MouseLeftButtonDown="CardMouseDown" BorderBrush="Black" BorderThickness="2">
     <UserControl.ToolTip>
         <ToolTip Background="#7F87CEEB"  Foreground="White" HasDropShadow="False"
                      Placement="Relative" HorizontalOffset="-100" VerticalOffset="0">
@@ -23,7 +24,15 @@
             <Setter Property="VerticalAlignment" Value="Center" />
             <Setter Property="HorizontalAlignment" Value="Center" />
         </Style>
+
+        <Style TargetType="UserControl">
+            <Style.Triggers>
+                <Trigger Property="IsEnabled" Value="False"></Trigger>
+            </Style.Triggers>
+        </Style>
     </UserControl.Resources>
+    
+
 
 
     <UserControl.ContextMenu>
@@ -45,9 +54,9 @@
         </Grid.ColumnDefinitions>
 
 
-        <TextBlock Grid.Row="0" Grid.Column="0" Name="CardClass" Text="Класс"></TextBlock>
-        <TextBlock Grid.Row="1" Grid.Column="0" Name="CardDiscipline" Text="Предмет"></TextBlock>
-        <TextBlock Grid.Row="0" Grid.Column="1"  Grid.RowSpan="2"  Name="CardCount" Text="Кол-во" FontSize="18" FontWeight="Bold" ></TextBlock>
+        <TextBlock Grid.Row="0" Grid.Column="0" Name="CardClass"></TextBlock>
+        <TextBlock Grid.Row="1" Grid.Column="0" Name="CardDiscipline"></TextBlock>
+        <TextBlock Grid.Row="0" Grid.Column="1"  Grid.RowSpan="2"  Name="CardCount" FontSize="18" FontWeight="Bold" ></TextBlock>
 
 
     </Grid>

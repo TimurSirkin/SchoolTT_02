@@ -33,6 +33,8 @@ namespace SchoolTT_02
 
 
         //<Поля и свойства>----------------
+        private bool AllowDrag = true;
+
         public List<Class> ClassList;
 
         public string FirstName
@@ -105,6 +107,14 @@ namespace SchoolTT_02
             {
                 _count = value;
                 CardCount.Text = value.ToString();
+                if (_count == 0)
+                {
+                    AllowDrag = false;
+                }
+                else
+                {
+                    AllowDrag = true;
+                }
             }
         }
 
@@ -129,6 +139,10 @@ namespace SchoolTT_02
 
         //<События>----------------
         public event EventHandler CardDelete; //Событие удаления карточки из ListBox;
+
+        public event EventHandler CardCaptured; //Событие захвата карточки;
+
+        public event EventHandler CardDropped; //Событие броска карточки;
         //</События>----------------
 
 
@@ -151,10 +165,15 @@ namespace SchoolTT_02
 
         private void CardMouseDown(object sender, MouseButtonEventArgs e) //Обработчик события перетаскивая карточки
         {
-            Card mMessege = (Card)sender;
-            DataObject data = new DataObject();
-            data.SetData("Object", sender);
-            DragDrop.DoDragDrop(mMessege, data, DragDropEffects.Move);
+            var mMessege = (Card)sender;
+            if(mMessege.AllowDrag == true)
+            {
+                var data = new DataObject();
+                data.SetData("Object", sender);
+                OnCardCaptured();
+                DragDrop.DoDragDrop(mMessege, data, DragDropEffects.Move);
+                OnCardDropped();
+            }
         }
         //</Обработчики>----------------
 
@@ -164,15 +183,22 @@ namespace SchoolTT_02
         public void Edit() //Вызывает окно редактирования карточки
         {
             var editCardWindow = new EditCardWindow(this, ClassList);
-            if (editCardWindow.ShowDialog() == true)
-            {
-
-            }
+            editCardWindow.ShowDialog();
         }
 
         protected virtual void OnCardDelete() //Инициализация события
         {
             CardDelete?.Invoke(this, EventArgs.Empty);
+        }
+
+        protected virtual void OnCardCaptured()//Инициализация события
+        {
+            CardCaptured?.Invoke(this, EventArgs.Empty);
+        }
+
+        protected virtual void OnCardDropped()//Инициализация события
+        {
+            CardDropped?.Invoke(this, EventArgs.Empty);
         }
         //</Методы>----------------
 
