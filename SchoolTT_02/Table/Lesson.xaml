@@ -18,8 +18,9 @@
     </UserControl.Resources>
 
     <UserControl.ContextMenu>
-        <ContextMenu>
-            <MenuItem Header="Удалить" Click="ContextMenuDeleteClick"></MenuItem>
+        <ContextMenu Name="ContextMenu">
+            <MenuItem Name="DeleteItem" Header="Удалить" PreviewMouseLeftButtonDown="ContextMenuDeleteClick"></MenuItem>
+            <MenuItem Name="ClearItem" Header="Очистить строку" PreviewMouseLeftButtonDown="ContextMenuClearClick"></MenuItem>
         </ContextMenu>
     </UserControl.ContextMenu>
 

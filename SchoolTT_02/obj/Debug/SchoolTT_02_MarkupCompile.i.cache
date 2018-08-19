@@ -10,11 +10,11 @@ none
 false
 DEBUG;TRACE
 C:\Users\SWS\Documents\GitHub\SchoolTT_02\SchoolTT_02\Main\App.xaml
-9-401747658
+10-1144363077
 
-17-1268881313
+18236070055
 141882249534
-Card.xaml;Cell.xaml;EditWindows\EditCardWindow.xaml;EditWindows\EditClassWindow.xaml;Main\MainWindow.xaml;Table\Class.xaml;Table\Day.xaml;Table\Lesson.xaml;Table\CardTable.xaml;
+Card.xaml;Cell.xaml;EditWindows\CreateCardWindow.xaml;EditWindows\EditCardWindow.xaml;EditWindows\EditClassWindow.xaml;Main\MainWindow.xaml;Table\Class.xaml;Table\Day.xaml;Table\Lesson.xaml;Table\CardTable.xaml;
 
 True
 

@@ -55,3 +55,5 @@ C:\Users\SWS\Documents\GitHub\SchoolTT_02\SchoolTT_02\obj\Debug\EditWindows\Edit
 C:\Users\SWS\Documents\GitHub\SchoolTT_02\SchoolTT_02\obj\Debug\EditWindows\EditCardWindow.baml
 C:\Users\SWS\Documents\GitHub\SchoolTT_02\SchoolTT_02\obj\Debug\EditWindows\EditClassWindow.g.cs
 C:\Users\SWS\Documents\GitHub\SchoolTT_02\SchoolTT_02\obj\Debug\EditWindows\EditClassWindow.baml
+C:\Users\SWS\Documents\GitHub\SchoolTT_02\SchoolTT_02\obj\Debug\EditWindows\CreateCardWindow.g.cs
+C:\Users\SWS\Documents\GitHub\SchoolTT_02\SchoolTT_02\obj\Debug\EditWindows\CreateCardWindow.baml

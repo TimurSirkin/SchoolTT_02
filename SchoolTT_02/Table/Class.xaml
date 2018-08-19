@@ -21,6 +21,7 @@
     <UserControl.ContextMenu>
         <ContextMenu>
             <MenuItem Header="Удалить" Click="ContextMenuDeleteClick"></MenuItem>
+            <MenuItem Header="Очистить" Click="ContextMenuClearClick"></MenuItem>
             <MenuItem Header="Редактировать" Click="ContextMenuEditClick"></MenuItem>
         </ContextMenu>
     </UserControl.ContextMenu>

@@ -2,26 +2,17 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 using SchoolTT_02.Table;
 using WPFColorPickerLib;
 
-namespace SchoolTT_02
+namespace SchoolTT_02.EditWindows
 {
-    /// <summary>
-    /// Логика взаимодействия для EditCardWindow.xaml
-    /// </summary>
     public partial class EditCardWindow : Window
     {
+        #region Конструкторы и деструкторы
         public EditCardWindow(Card pCard, List<Class> pClassList)
         {
             InitializeComponent();
@@ -40,24 +31,21 @@ namespace SchoolTT_02
             WindowBackground.Background = pCard.Background;
             _card = pCard;
         }
+        #endregion
 
-        //<Поля и свойства>----------------
+
+        #region Поля и свойства
         private readonly List<Class> _classList;
 
         private readonly Card _card;
-        //</Поля и свойства>----------------
+        #endregion
 
 
-        
+        #region Методы
+        #endregion
 
 
-
-        //<Методы>----------------
-        //</Методы>----------------
-
-
-
-        //<Обработчики>----------------
+        # region Обработчики
         private void ColorPickerClick(object sender, RoutedEventArgs e)//Выбор цвета
         {
             var colorDialog = new ColorDialog { Owner = this };
@@ -75,13 +63,41 @@ namespace SchoolTT_02
             _card.ThirdName = WindowThirdName.Text;
             _card.Discipline = WindowDiscipline.Text;
             _card.Background = WindowBackground.Background;
+
             if (WindowClass.SelectedIndex != -1)
-            _card.Class = _classList[WindowClass.SelectedIndex];
-            this.Closing -= EditCardWindow_OnClosing;
-            this.DialogResult = true;
+            {
+                if (!Equals(_card.Class, _classList[WindowClass.SelectedIndex]))
+                {
+                    if (MessageBox.Show("Изменение класса карточки может привести к удалению карточки из столбца." +
+                                        "\n" +
+                                        "Продолжить?",
+                            "Подтверждение", MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.Yes)
+                    {
+                        _card.OnClassChanged();
+                        _card.Class = _classList[WindowClass.SelectedIndex];
+                        this.Closing -= EditCardWindow_OnClosing;
+                        this.DialogResult = true;
+                    }
+                    else
+                    {
+                        WindowClass.SelectedIndex = _classList.IndexOf(_card.Class);
+                    }
+
+                }
+                else
+                {
+                    this.Closing -= EditCardWindow_OnClosing;
+                    this.DialogResult = true;
+                }
+            }
+            else
+            {
+                this.Closing -= EditCardWindow_OnClosing;
+                this.DialogResult = true;
+            }
         }
 
-        private void WindowCount_OnTextChanged(object sender, TextChangedEventArgs e)
+        private void WindowCount_OnTextChanged(object sender, TextChangedEventArgs e)//Проверка на недопустимые символы в texbox(только цифры)
         {
             var textBox = sender as TextBox;
 
@@ -96,7 +112,7 @@ namespace SchoolTT_02
             }
         }
 
-        private void EditCardWindow_OnClosing(object sender, CancelEventArgs e)
+        private void EditCardWindow_OnClosing(object sender, CancelEventArgs e)//Подтверждение закрытия окна
         {
             if (MessageBox.Show("Изменения не будут сохранены." + "\n" +
                                     "Выйти из режима редактирования?",
@@ -105,13 +121,12 @@ namespace SchoolTT_02
                 e.Cancel = true;
             }
         }
-        //</Обработчики>----------------
+        #endregion
 
 
+        #region События
+        #endregion
 
-        //<События>----------------
-
-        //</События>----------------
         
     }
 }

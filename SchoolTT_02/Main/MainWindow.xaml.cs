@@ -21,29 +21,31 @@ namespace SchoolTT_02.Main
     /// </summary>
     public partial class MainWindow : Window
     {
+        #region Конструкторы и деструкторы
         public MainWindow()
         {
             InitializeComponent();
-            AddCard("Тимур","Сиркин","Владимирович",0, Brushes.Red, 3, "Русский язык");
+            AddCard("Тимур", "Сиркин", "Владимирович", 0, Brushes.Red, 3, "Русский язык");
             AddCard("Андрей", "Белов", "Семенович", 1, Brushes.BlanchedAlmond, 13, "Математика");
             AddCard("Айдар", "Закиров", "Рафаэльевич", 2, Brushes.Green, 8, "История");
             AddCard("Олег", "Шатин", "Михаилович", 0, Brushes.Yellow, 0, "Биология");
         }
+        #endregion
 
 
-        //<Поля и свойства>----------------
-        //</Поля и свойства>----------------
+        #region Поля и свойства
+        #endregion
 
 
-
-        //<Методы>----------------
+        #region Методы
         private void AddCard(string pFirstName, string pSecondName, string pThirdName, int pClass, SolidColorBrush pColor, int pCount, string pDiscipline)
         {
-            var tempCard = new Card(MainTable.ClassList) {FirstName = pFirstName, SecondName = pSecondName, ThirdName = pThirdName, Class = MainTable.ClassList[pClass], Color = pColor, Count = pCount, Discipline = pDiscipline};
+            var tempCard = new Card(MainTable.ClassList) { FirstName = pFirstName, SecondName = pSecondName, ThirdName = pThirdName, Class = MainTable.ClassList[pClass], Color = pColor, Count = pCount, Discipline = pDiscipline };
             CardListBox.Items.Add(tempCard);
             tempCard.CardDelete += DeleteCard;
             tempCard.CardCaptured += CardCaptured;
             tempCard.CardDropped += CardDropped;
+            tempCard.ClassChanged += ClearWrongCells;
         }
 
         private void ShowTrueClass(Class pClass)//Отключает все ячейки, не соответствующие pClass
@@ -56,41 +58,51 @@ namespace SchoolTT_02.Main
                         cell.AllowDrop = false;
                         break;
                     case Cell cell:
-                        cell.BorderBrush = Brushes.Black;
+                        cell.BorderBrush = Brushes.DeepSkyBlue;
+                        cell.CellClassTextBox.FontSize = 18;
+                        //cell.BorderThickness = new Thickness(4,2,4,2);
                         break;
                     case Class _:
-                        if ((Class)obj == pClass)
-                            ((Class)obj).BorderBrush = Brushes.Black;
+                        if ((Class) obj == pClass)
+                        {
+                            ((Class) obj).BorderBrush = Brushes.DarkBlue;
+                            ((Class) obj).Background = Brushes.DarkBlue;
+                        }
+
                         break;
                 }
             }
         }
-        //</Методы>----------------
+        #endregion
 
 
-
-        //<Обработчики>----------------
-        private void CreateCardClick(object sender, RoutedEventArgs e)
+        #region Обработчики
+        private void CreateCardClick(object sender, RoutedEventArgs e)//Создания карточки
         {
             var tempCard = new Card(MainTable.ClassList);
             tempCard.CardDelete += DeleteCard;
             tempCard.CardCaptured += CardCaptured;
             tempCard.CardDropped += CardDropped;
+            tempCard.CardDeleteWithoutWarning += (s, ev) => CardListBox.Items.Remove(s as Card ?? throw new InvalidOperationException());
             CardListBox.Items.Add(tempCard);
-            tempCard.Edit();
+            tempCard.EditNew();
         }
 
-        private void DeleteCard(object sender, EventArgs e)
+        private void DeleteCard(object sender, EventArgs e)//Удаления карточки
         {
-            CardListBox.Items.Remove(((Card)sender));
+            if (MessageBox.Show("Удалить карточку?",
+                    "Подтверждение", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
+            {
+                CardListBox.Items.Remove(((Card)sender));
+            }
         }
 
-        private void CardCaptured(object sender, EventArgs e)
+        private void CardCaptured(object sender, EventArgs e)//Переноса карточки
         {
             ShowTrueClass(((Card)sender).Class);
         }
 
-        private void CardDropped(object sender, EventArgs e)
+        private void CardDropped(object sender, EventArgs e)//Броска карточки в ячейку
         {
             foreach (var obj in MainTable.TableGrid.Children)
             {
@@ -99,19 +111,32 @@ namespace SchoolTT_02.Main
                     var cell = (Cell)obj;
                     cell.AllowDrop = true;
                     cell.BorderBrush = Brushes.SkyBlue;
+                    cell.CellClassTextBox.FontSize = 12;
                 }
                 if (obj is Class)
                 {
                     ((Class)obj).BorderBrush = Brushes.White;
+                    //((Class)obj).BorderThickness = new Thickness(2);
+                    ((Class)obj).Background = Brushes.SkyBlue;
                 }
             }
         }
-        //</Обработчики>----------------
 
+        private void DeletCardFromWrongColumns(object sender, EventArgs e)//Удаление карточки из неподходящих строк
+        {
 
+        }
 
-        //<События>----------------
+        private void ClearWrongCells(object sender, EventArgs e)
+        {
+            var card = (Card) sender;
+            foreach (var cell in card.Class.CellList)
+            {
+                cell.Clear();
+            }
+        }
 
-        //</События>----------------
+        #endregion
     }
 }
+

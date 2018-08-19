@@ -60,6 +60,9 @@
     <Compile Include="Cell.xaml.cs">
       <DependentUpon>Cell.xaml</DependentUpon>
     </Compile>
+    <Compile Include="EditWindows\CreateCardWindow.xaml.cs">
+      <DependentUpon>CreateCardWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="EditWindows\EditCardWindow.xaml.cs">
       <DependentUpon>EditCardWindow.xaml</DependentUpon>
     </Compile>
@@ -83,6 +86,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Cell.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="EditWindows\CreateCardWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -21,36 +21,56 @@ namespace SchoolTT_02.Table
     /// </summary>
     public partial class Day : UserControl
     {
-        public event EventHandler LessonAdded;
+        #region Конструкторы и деструкторы
         public Day()
         {
             InitializeComponent();
             DataContext = this;
             //Add(new Lesson());
         }
+        #endregion
 
 
-
-        //<Поля и свойства>----------------
+        #region Поля и свойства
         public List<Lesson> LessonList = new List<Lesson>();//Список уроков в этот день
-        //</Поля и свойства>----------------
+        #endregion
 
 
+        #region Методы
 
-        //<Методы>----------------
-        public void Add(Lesson pLesson)
+        private void CheckLessonsCount()
+        {
+            if (LessonList.Count == 1)
+            {
+                foreach (var lesson in LessonList)
+                {
+                    lesson.DeleteItem.IsEnabled = false;
+                }
+            }
+            else
+            {
+                foreach (var lesson in LessonList)
+                {
+                    lesson.DeleteItem.IsEnabled = true;
+                }
+            }
+        }
+
+        public void Add(Lesson pLesson)//Добавляет урок в список дней и вызывает событе, обработчик которого создаст новую строку в Day
         {
             this.LessonList.Add(pLesson);
             pLesson.LessonDeleted += DeleteLessonFromList;
             pLesson.LessonDeleted += (s, e) => Grid.SetRowSpan(this, this.LessonList.Count);
+            pLesson.LessonDeleted += CheckLessonsCount;
             OnLessonAdded();
-        }//Добавляет урок в список дней и вызывает событе, обработчик которого создаст новую строку в Day
+            CheckLessonsCount();
+        }
 
         public void RenameLessons()//Нумерует уроки соответственно их порядку в списке уроков соответствующего дня
-        { 
+        {
             foreach (var lesson in LessonList)
             {
-                lesson.Number = LessonList.IndexOf(lesson)+1;
+                lesson.Number = LessonList.IndexOf(lesson) + 1;
             }
         }
 
@@ -58,11 +78,10 @@ namespace SchoolTT_02.Table
         {
             LessonAdded?.Invoke(this, EventArgs.Empty);
         }//Инициализация события
-        //</Методы>----------------
+        #endregion
 
 
-
-        //<Обработчики>----------------
+        #region Обработчики
         private void AddLessonClick(object sender, RoutedEventArgs e)
         {
             Add(new Lesson());
@@ -70,7 +89,7 @@ namespace SchoolTT_02.Table
 
         private void DeleteLessonFromList(object sender, EventArgs e)//Обработчик удаления урока
         {
-            var lessonForDelete = (Lesson) sender;
+            var lessonForDelete = (Lesson)sender;
             var indexForDelete = LessonList.IndexOf(lessonForDelete);
             for (var i = indexForDelete; i < LessonList.Count - 1; i++)
             {
@@ -81,16 +100,17 @@ namespace SchoolTT_02.Table
             LessonList.Remove(lessonForDelete);
 
         }
-        //</Обработчики>----------------
+
+        private void CheckLessonsCount(object sender, EventArgs e)
+        {
+            CheckLessonsCount();
+        }
+        #endregion
 
 
-
-        //<События>----------------
-
-        //</События>----------------
-
-
-
+        #region События
+        public event EventHandler LessonAdded;
+        #endregion
 
     }
 }

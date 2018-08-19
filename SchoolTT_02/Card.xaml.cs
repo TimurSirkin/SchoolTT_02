@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using SchoolTT_02.EditWindows;
 using SchoolTT_02.Table;
 
 namespace SchoolTT_02
@@ -21,19 +22,18 @@ namespace SchoolTT_02
     /// </summary>
     public partial class Card : UserControl
     {
+        #region Конструкторы и деструкторы
         public Card(List<Class> pClassList)
         {
             InitializeComponent();
             Color = Brushes.White;
             ClassList = pClassList;
         }
+        #endregion
 
 
-
-
-
-        //<Поля и свойства>----------------
-        private bool AllowDrag = true;
+        #region Поля и свойства
+        private bool _allowDrag = true;
 
         public List<Class> ClassList;
 
@@ -41,7 +41,8 @@ namespace SchoolTT_02
         {
             get => _firstName;
             set
-            { _firstName = value;
+            {
+                _firstName = value;
                 TtCardFirstName.Text = value;
             }
         }
@@ -109,11 +110,11 @@ namespace SchoolTT_02
                 CardCount.Text = value.ToString();
                 if (_count == 0)
                 {
-                    AllowDrag = false;
+                    _allowDrag = false;
                 }
                 else
                 {
-                    AllowDrag = true;
+                    _allowDrag = true;
                 }
             }
         }
@@ -133,21 +134,50 @@ namespace SchoolTT_02
                 this.Background = value;
             }
         }
-        //</Поля и свойства>----------------
+        #endregion
 
 
+        #region Методы
+        public void Edit() //Вызывает окно редактирования карточки
+        {
+            var editCardWindow = new EditCardWindow(this, ClassList);
+            editCardWindow.ShowDialog();
+        }
 
-        //<События>----------------
-        public event EventHandler CardDelete; //Событие удаления карточки из ListBox;
+        public void EditNew() //Вызывает окно редактирования новой карточки
+        {
+            var createCardWindow = new CreateCardWindow(this, ClassList);
+            createCardWindow.ShowDialog();
+        }
 
-        public event EventHandler CardCaptured; //Событие захвата карточки;
+        protected virtual void OnCardDelete() //Инициализация события
+        {
+            CardDelete?.Invoke(this, EventArgs.Empty);
+        }
 
-        public event EventHandler CardDropped; //Событие броска карточки;
-        //</События>----------------
+        protected virtual void OnCardCaptured()//Инициализация события
+        {
+            CardCaptured?.Invoke(this, EventArgs.Empty);
+        }
+
+        protected virtual void OnCardDropped()//Инициализация события
+        {
+            CardDropped?.Invoke(this, EventArgs.Empty);
+        }
+
+        public void OnCardDeleteWithoutWarning()//Инициализация события
+        {
+            CardDeleteWithoutWarning?.Invoke(this, EventArgs.Empty);
+        }
+
+        public void OnClassChanged()//Инициализация события
+        {
+            ClassChanged?.Invoke(this, EventArgs.Empty);
+        }
+        #endregion
 
 
-
-        //<Обработчики>----------------
+        #region Обработчики
         private void DoubleClick(object sender, RoutedEventArgs e) //Обработчик двойного нажатия
         {
             this.Edit();
@@ -166,7 +196,7 @@ namespace SchoolTT_02
         private void CardMouseDown(object sender, MouseButtonEventArgs e) //Обработчик события перетаскивая карточки
         {
             var mMessege = (Card)sender;
-            if(mMessege.AllowDrag == true)
+            if (mMessege._allowDrag == true)
             {
                 var data = new DataObject();
                 data.SetData("Object", sender);
@@ -175,32 +205,23 @@ namespace SchoolTT_02
                 OnCardDropped();
             }
         }
-        //</Обработчики>----------------
+        #endregion
 
 
+        #region События
+        public event EventHandler CardDelete; //Событие удаления карточки из ListBox;
 
-        //<Методы>----------------
-        public void Edit() //Вызывает окно редактирования карточки
-        {
-            var editCardWindow = new EditCardWindow(this, ClassList);
-            editCardWindow.ShowDialog();
-        }
+        public event EventHandler CardCaptured; //Событие захвата карточки;
 
-        protected virtual void OnCardDelete() //Инициализация события
-        {
-            CardDelete?.Invoke(this, EventArgs.Empty);
-        }
+        public event EventHandler CardDropped; //Событие броска карточки;
 
-        protected virtual void OnCardCaptured()//Инициализация события
-        {
-            CardCaptured?.Invoke(this, EventArgs.Empty);
-        }
+        public event EventHandler CardDeleteWithoutWarning; //Событие удаления карточки без предупреждения;
 
-        protected virtual void OnCardDropped()//Инициализация события
-        {
-            CardDropped?.Invoke(this, EventArgs.Empty);
-        }
-        //</Методы>----------------
+        public event EventHandler ClassChanged;//Cобытие изменения класса карточки
 
+        #endregion
+
+
+       
     }
 }

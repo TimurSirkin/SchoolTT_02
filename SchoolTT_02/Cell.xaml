@@ -16,6 +16,15 @@
         </Style>
     </UserControl.Resources>
 
+
+
+    <UserControl.ContextMenu>
+        <ContextMenu Name="ClearMenu">
+            <MenuItem Name="ClearItem" Header="Очистить" PreviewMouseLeftButtonDown="ContextMenuClearClick" IsEnabled="False"></MenuItem>
+        </ContextMenu>
+    </UserControl.ContextMenu>
+
+
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition></RowDefinition>

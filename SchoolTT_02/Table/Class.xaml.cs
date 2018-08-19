@@ -20,14 +20,16 @@ namespace SchoolTT_02.Table
 {
     public partial class Class : UserControl
     {
+        #region Конструкторы и деструкторы
         public Class()
         {
             InitializeComponent();
             XName = "Класс";
         }
+        #endregion
 
 
-        //<Поля и свойства>----------------
+        #region Поля и свойства
         public List<Cell> CellList = new List<Cell>();//Список ячеек в столбце, соответствующего класса
 
         private string _xname;//Название класса
@@ -35,29 +37,15 @@ namespace SchoolTT_02.Table
         {
             get => _xname;
             set
-            { _xname = value;
+            {
+                _xname = value;
                 ClassTextBox.Text = value;
             }
         }
-        //</Поля и свойства>----------------
+        #endregion
 
 
-
-        //<Обработчики>----------------
-        private void ContextMenuDeleteClick(object sender, RoutedEventArgs e)
-        {
-            OnClassDeleted();
-        }//Обработчик нажатия на кнопку удаления урока
-
-        private void ContextMenuEditClick(object sender, RoutedEventArgs e)
-        {
-            Edit();
-        }
-        //</Обработчики>----------------
-
-
-
-        //<Методы>----------------
+        #region Методы
         protected virtual void OnClassDeleted()//Запуск события
         {
             ClassDeleted?.Invoke(this, EventArgs.Empty);
@@ -71,15 +59,40 @@ namespace SchoolTT_02.Table
 
             }
         }
-        //</Методы>----------------
+        #endregion
 
 
-        //<События>----------------
-        public event EventHandler ClassDeleted;
-        //</События>----------------
+        #region Обработчики
+        private void ContextMenuDeleteClick(object sender, RoutedEventArgs e)//Обработчик нажатия на кнопку удаления урока
+        {
+            if (MessageBox.Show("Весь столбец будет удален." + "\n" +
+                                "Удалить класс?",
+                    "Подтверждение", MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.Yes)
+                OnClassDeleted();
+        }
+
+        private void ContextMenuEditClick(object sender, RoutedEventArgs e)
+        {
+            Edit();
+        }
+
         private void Class_OnMouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
             Edit();
         }
+
+        private void ContextMenuClearClick(object sender, RoutedEventArgs routedEventArgs)
+        {
+            foreach (var cell in CellList)
+            {
+                cell.Clear();
+            }
+        }
+        #endregion
+
+
+        #region События
+        public event EventHandler ClassDeleted;
+        #endregion
     }
 }

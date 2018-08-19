@@ -1,11 +1,11 @@
-﻿<Window x:Class="SchoolTT_02.EditWindows.EditCardWindow"
+﻿<Window x:Class="SchoolTT_02.EditWindows.CreateCardWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:SchoolTT_02"
+        xmlns:local="clr-namespace:SchoolTT_02.EditWindows"
         mc:Ignorable="d"
-        Title="Редактирование карточки"  Width="270" SizeToContent="Height" Background="Aqua" ResizeMode="NoResize" Closing="EditCardWindow_OnClosing">
+        Title="Создание"  Width="270" SizeToContent="Height" Background="Aqua" ResizeMode="NoResize" Closing="EditCardWindow_OnClosing">
 
 
     <Window.Resources>
@@ -62,4 +62,3 @@
     </Grid>
 
 </Window>
-

@@ -17,6 +17,7 @@ namespace SchoolTT_02.Table
 {
     public partial class CardTable : UserControl
     {
+        #region Конструкторы и деструкторы
         public CardTable()
         {
             InitializeComponent();
@@ -32,31 +33,29 @@ namespace SchoolTT_02.Table
             Add(new Day(), TableGrid.RowDefinitions.Count);
             Add(new Day(), TableGrid.RowDefinitions.Count);
         }
+        #endregion
 
+
+        #region Поля и свойства
         private const int СLessonPlace = 1;
         private const int СMinHeight = 100;
         private const int СSeparatorHeight = 100;
         private const int СMinWidth = 100;
 
-
-
-
-        //</Поля и свойства>----------------
         private readonly List<Day> _dayList = new List<Day>();//Список дней в таблице
 
         public readonly List<Class> ClassList = new List<Class>();//Список классов в таблице
-        //</Поля и свойства>----------------
+        #endregion
 
 
-
-        //<Методы>----------------
+        #region Методы
         private void Add(Lesson pLesson, int pPlace)//Добавление урока в таблицу
         {
             TableGrid.Children.Add(pLesson);
             pLesson.LessonDeleted += DeleteLessonRow;
             Grid.SetRow(pLesson, pPlace);
             Grid.SetColumn(pLesson, СLessonPlace);
-            AddCellsToRow(pPlace, pLesson); 
+            AddCellsToRow(pPlace, pLesson);
         }
 
         private void Add(Day pDay, int pPlace)//Добавление дня в список и создание новой строки
@@ -65,16 +64,16 @@ namespace SchoolTT_02.Table
             TableGrid.Children.Add(pDay);
             Grid.SetRow(pDay, pPlace);
             pDay.LessonAdded += Add;
-            pDay.LessonAdded += (s,e) => Grid.SetRowSpan(pDay, pDay.LessonList.Count);
+            pDay.LessonAdded += (s, e) => Grid.SetRowSpan(pDay, pDay.LessonList.Count);
             pDay.Add(new Lesson());
-            TableGrid.RowDefinitions.Add(new RowDefinition(){Height = new GridLength(СSeparatorHeight) });
+            TableGrid.RowDefinitions.Add(new RowDefinition() { Height = new GridLength(СSeparatorHeight) });
         }
 
         private void Add(Class pClass, int pPlace)//Добавление класса в список и создание нового столбца
         {
             this.ClassList.Add(pClass);
             pClass.ClassDeleted += DeleteClassColumn;
-            TableGrid.ColumnDefinitions.Add(new ColumnDefinition(){MinWidth = СMinWidth});
+            TableGrid.ColumnDefinitions.Add(new ColumnDefinition() { MinWidth = СMinWidth });
             TableGrid.Children.Add(pClass);
             Grid.SetColumn(pClass, pPlace);
             AddCellsToColumn(pPlace, pClass);
@@ -82,11 +81,11 @@ namespace SchoolTT_02.Table
 
         private void Add(object sender, EventArgs e)//Вызывается при обработке событие LessonAdded(Добавление урока в список дней)
         {
-            Day day = (Day) sender;
+            Day day = (Day)sender;
             Lesson lesson = day.LessonList[day.LessonList.Count - 1];
-            int place = Grid.GetRow(day) + day.LessonList.Count-1;
+            int place = Grid.GetRow(day) + day.LessonList.Count - 1;
             MoveRows(place, 1);
-            TableGrid.RowDefinitions.Insert(place, new RowDefinition() { MinHeight = СMinHeight }); 
+            TableGrid.RowDefinitions.Insert(place, new RowDefinition() { MinHeight = СMinHeight });
             Add(lesson, place);
             day.RenameLessons();
         }
@@ -126,7 +125,7 @@ namespace SchoolTT_02.Table
                 pLesson.CellList.Add(newCell);
                 Class.CellList.Add(newCell);
                 Grid.SetRow(newCell, pPlace);
-                Grid.SetColumn(newCell,i);
+                Grid.SetColumn(newCell, i);
                 i++;
             }
         }
@@ -134,37 +133,37 @@ namespace SchoolTT_02.Table
         private void AddCellsToColumn(int pPlace, Class pClass)//Добавляет ячейки в столбец на месте pPlace и записывает их списки ячеек соответствующих Class и Lesson
         {
             int i = 0;
-                foreach (var day in _dayList)
+            foreach (var day in _dayList)
+            {
+                foreach (var lesson in ((Day)day).LessonList)
                 {
-                    foreach (var lesson in ((Day) day).LessonList)
-                    {
-                        i++;
-                        Cell newCell = new Cell();
-                        BindCellToClass(pClass, newCell);
-                        TableGrid.Children.Add(newCell);
-                        pClass.CellList.Add(newCell);
-                        lesson.CellList.Add(newCell);
-                        Grid.SetRow(newCell, i);
-                        Grid.SetColumn(newCell, pPlace);
-                    }
                     i++;
-            } 
-            
+                    Cell newCell = new Cell();
+                    BindCellToClass(pClass, newCell);
+                    TableGrid.Children.Add(newCell);
+                    pClass.CellList.Add(newCell);
+                    lesson.CellList.Add(newCell);
+                    Grid.SetRow(newCell, i);
+                    Grid.SetColumn(newCell, pPlace);
+                }
+                i++;
+            }
+
         }
 
         private void DeleteCellsFromRow(int pPlace, Lesson pLesson)//Удаляет все ячейки из строки
         {
             foreach (var cell in pLesson.CellList)
             {
-                TableGrid.Children.Remove(cell);
+                DeleteCell(cell);
             }
         }
 
         private void DeleteCellsFromColumn(int pPlace, Class pClass)//Удаляет все ячейки из столбца
         {
-            foreach (var cell in pClass.CellList)
+            for (var i = 0; i< pClass.CellList.Count; i++)
             {
-                TableGrid.Children.Remove(cell);
+                DeleteCell(pClass.CellList[i]);
             }
         }
 
@@ -178,7 +177,7 @@ namespace SchoolTT_02.Table
 
             ClassList[ClassList.Count - 1] = pClass;
             ClassList.Remove(pClass);
-            pClass.XName="";
+            pClass.XName = "";
         }
 
         private static void BindCellToClass(Class pClass, Cell pCell)//Присваивает ячейке класс соответствующего столбца
@@ -193,14 +192,31 @@ namespace SchoolTT_02.Table
             BindingOperations.SetBinding(pCell.CellClassTextBox, TextBlock.TextProperty, binding);
 
         }
-        //</Методы>----------------
+
+        private void DeleteCell(Cell pCell)//Удаляет ячеку и возвращает карточку, если она в ней была
+        {
+            if (pCell.Card != null)
+            {
+                pCell.Card.Count++;
+            }
+
+            pCell.Card?.Class.CellList.Remove(pCell);
+            foreach (var day in _dayList)
+            {
+                foreach (var leeson in day.LessonList)
+                {
+                    leeson.CellList.Remove(pCell);
+                }
+            }
+            TableGrid.Children.Remove(pCell);
+        }
+        #endregion
 
 
-
-        //<Обработчики>----------------
+        #region Обработчики
         private void AddClassClick(object sender, RoutedEventArgs e)
-        { 
-            Add(new Class(),TableGrid.ColumnDefinitions.Count );
+        {
+            Add(new Class(), TableGrid.ColumnDefinitions.Count);
         }//Обработчик нажатия кнопки добавления класса
 
         private void AddDayClick(object sender, RoutedEventArgs e)
@@ -220,11 +236,6 @@ namespace SchoolTT_02.Table
             {
                 day.RenameLessons();
             }
-            foreach (var obj in lesson.CellList)
-            {
-                if (obj.Card != null)
-                    obj.Card.Count++;
-            }
         }
 
         private void DeleteClassColumn(object sender, EventArgs e)//Вызывается при обработке событие ClassDeleted(Удаление классв из списка)
@@ -236,18 +247,11 @@ namespace SchoolTT_02.Table
             DeleteCellsFromColumn(place, Class);
             TableGrid.ColumnDefinitions.RemoveAt(Grid.GetColumn(Class));
             MoveColumns(place, -1);
-            foreach (var obj in Class.CellList)
-            {
-                if(obj.Card!=null)
-                    obj.Card.Count++;
-            }
         }
-        //</Обработчики>----------------
+        #endregion
 
 
-
-        //<События>----------------
-
-        //</События>----------------
+        #region События
+        #endregion
     }
 }

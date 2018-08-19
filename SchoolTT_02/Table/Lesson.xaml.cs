@@ -20,13 +20,15 @@ namespace SchoolTT_02.Table
     /// </summary>
     public partial class Lesson : UserControl
     {
-        public event EventHandler LessonDeleted;
+        #region Конструкторы и деструкторы
         public Lesson()
         {
             InitializeComponent();
         }
+        #endregion
 
-        //<Поля и свойства>----------------
+
+        #region Поля и свойства
         public List<Cell> CellList = new List<Cell>();//Список ячеек в строке, соответствующего урока
 
         private int _number;
@@ -39,30 +41,39 @@ namespace SchoolTT_02.Table
                 LessonNumber.Text = value.ToString();
             }
         }
-        //</Поля и свойства>----------------
+        #endregion
 
 
-
-        //<Обработчики>----------------
-        private void ContextMenuDeleteClick(object sender, RoutedEventArgs e)
-        {
-            OnLessonDeleted();
-        }//Обработчик нажатия на кнопку удаления урока
-         //</Обработчики>----------------
-
-
-
-        //<Методы>----------------
-        protected virtual void OnLessonDeleted()
+        #region Методы
+        protected virtual void OnLessonDeleted()//Запуск события
         {
             LessonDeleted?.Invoke(this, EventArgs.Empty);
-        }//Запуск события
-        //</Методы>----------------
+        }
+        #endregion
 
 
+        #region Обработчики
+        private void ContextMenuDeleteClick(object sender, RoutedEventArgs e)//Обработчик нажатия на кнопку удаления урока
+        {
+                if (MessageBox.Show("Вся строка будет удалена." + "\n" +
+                                    "Удалить урок?",
+                        "Подтверждение", MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.Yes)
+                    OnLessonDeleted();
+        }
+        private void ContextMenuClearClick(object sender, MouseButtonEventArgs e)
+        {
+            foreach (var cell in CellList)
+            {
+                cell.Clear();
+            }
+        }
+        #endregion
 
-        //<События>----------------
 
-        //</События>----------------
+        #region События
+        public event EventHandler LessonDeleted;
+        #endregion
+
+       
     }
 }

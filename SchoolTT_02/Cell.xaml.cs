@@ -23,13 +23,17 @@ namespace SchoolTT_02
     /// </summary>
     public partial class Cell : UserControl
     {
+        #region Конструкторы и деструкторы
+
         public Cell()
         {
             InitializeComponent();
         }
 
+        #endregion
 
-        //<Поля и свойства>----------------
+
+        #region Поля и свойства
         private string _xname;//Название класса
         public string XName
         {
@@ -41,18 +45,48 @@ namespace SchoolTT_02
             }
         }
 
+        public Card Card
+        {
+            get => _card;
+            set
+            {
+                _card = value;
+                if (_card == null)
+                {
+                    ClearItem.IsEnabled = false;
+                    ClearMenu.IsOpen = false;
+                }
+                else
+                {
+                    ClearItem.IsEnabled = true;
+                }
+            }
+        }
+
         public Class Class;
 
-        public Card Card;
-        //</Поля и свойства>----------------
+        private Card _card;
+        #endregion
 
 
+        #region Методы
 
-        //<Обработчики>----------------
+        public void Clear()
+        {
+            if (Card == null) return;
+            Card.Count++;
+            Discipline.Text = null;
+            Background = Brushes.AliceBlue;
+            Card = null;
+        }
+        #endregion
+
+
+        #region Обработчики
         private void CellDrop(object sender, DragEventArgs e)//Обработчик события перетаскивая в ячейку
         {
-            var card = (Card) e.Data.GetData("Object");
-            var cell = (Cell) sender;
+            var card = (Card)e.Data.GetData("Object");
+            var cell = (Cell)sender;
 
             if ((card).Count > 0)
             {
@@ -85,17 +119,12 @@ namespace SchoolTT_02
                 MessageBox.Show("Количество карточек равно нулю!");
             }
         }
-        //</Обработчики>----------------
 
-
-
-        //<Методы>----------------
-        //</Методы>----------------
-
-
-        //<События>----------------
-        //</События>----------------
-
+        private void ContextMenuClearClick(object sender, MouseButtonEventArgs e)
+        {
+            Clear();
+        }
+        #endregion
     }
-    }
+}
     

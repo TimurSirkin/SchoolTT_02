@@ -15,44 +15,33 @@ using SchoolTT_02.Table;
 
 namespace SchoolTT_02.EditWindows
 {
-    /// <summary>
-    /// Логика взаимодействия для EditClassWindow.xaml
-    /// </summary>
     public partial class EditClassWindow : Window
     {
+        #region Конструкторы и деструкторы
         public EditClassWindow(Class pClass)
         {
             InitializeComponent();
             _class = pClass;
             WindowXName.Text = pClass.XName;
         }
+        #endregion
 
-        //<Поля и свойства>----------------
+
+        #region Поля и свойства
         private readonly Class _class;
-        //</Поля и свойства>----------------
+        #endregion
 
 
+        #region Методы
+        #endregion
 
 
-
-
-        //<Методы>----------------
-        //</Методы>----------------
-
-
-
-        //<Обработчики>----------------
+        #region Обработчики
         private void AcceptClick(object sender, RoutedEventArgs e)//Кнопка "Принять"
         {
             _class.XName = WindowXName.Text;
             this.DialogResult = true;
         }
-        //</Обработчики>----------------
-
-
-
-        //<События>----------------
-
-        //</События>----------------
+        #endregion
     }
 }
