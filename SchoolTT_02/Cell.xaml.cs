@@ -81,11 +81,21 @@ namespace SchoolTT_02
         }
         #endregion
 
-
+       
         #region Обработчики
         private void CellDrop(object sender, DragEventArgs e)//Обработчик события перетаскивая в ячейку
         {
-            var card = (Card)e.Data.GetData("Object");
+            Card card;
+            if (e.Data.GetData("Object") is Card)
+                card = (Card) e.Data.GetData("Object");//ТУТА
+            else
+            {
+                card = ((Cell) e.Data.GetData("Object")).Card;
+            }
+
+           // MessageBox.Show(card.Background.ToString());
+            
+
             var cell = (Cell)sender;
 
             if ((card).Count > 0)
@@ -124,7 +134,19 @@ namespace SchoolTT_02
         {
             Clear();
         }
+
+        private void Cell_OnMouseDown(object sender, MouseButtonEventArgs e)
+        {
+            var mMessege = ((Cell) sender);
+            var data = new DataObject();
+            data.SetData("Object", mMessege);//ТУТА
+            mMessege.Card.OnCardCaptured();
+            DragDrop.DoDragDrop(mMessege, data, DragDropEffects.Move);
+            mMessege.Card.OnCardDropped();
+        }
         #endregion
+
+
     }
 }
     
