@@ -71,6 +71,11 @@ namespace SchoolTT_02
 
         #region Методы
 
+        protected virtual void OnCellFocused()
+        {
+            CellFocused?.Invoke(this, EventArgs.Empty);
+        }
+
         private void DragFrom(Card pCard)
         {
                 if (Card != null)
@@ -137,18 +142,31 @@ namespace SchoolTT_02
 
         private void Cell_OnMouseDown(object sender, MouseButtonEventArgs e)//Обработчик перетаскивания
         {
+            var cell = ((Cell)sender);
+
+
             if (((Cell) sender).Card == null) return;
-            var mMessege = ((Cell) sender);
             var data = new DataObject();
-            data.SetData("Cell", mMessege);
-            data.SetData("Card", mMessege.Card);
-            mMessege.Card.OnCardCaptured();
-            DragDrop.DoDragDrop(mMessege, data, DragDropEffects.Move);
-            if(mMessege.Card!=null) mMessege.Card.OnCardDropped();
+            data.SetData("Cell", cell);
+            data.SetData("Card", cell.Card);
+            cell.Card.OnCardCaptured();
+            DragDrop.DoDragDrop(cell, data, DragDropEffects.Move);
+            if(cell.Card!=null) cell.Card.OnCardDropped();
+        }
+
+        private void Cell_OnMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            var cell = sender as Cell;
+            if (cell != null) cell.BorderBrush = Brushes.Black;
+            OnCellFocused();
         }
         #endregion
 
+        #region События
+        public event EventHandler CellFocused;
+        #endregion
 
+        
     }
 }
     

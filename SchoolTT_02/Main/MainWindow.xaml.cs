@@ -157,6 +157,22 @@ namespace SchoolTT_02.Main
                 ReturnElemnt(obj);
             }
         }
+
+        private void MainTable_OnFocusChanged(object sender, EventArgs e)//Смена фокусной ячейки
+        {
+            var focusCell = sender as Cell;
+            foreach (Card card in CardListBox.Items)
+            {
+                if (focusCell != null && focusCell.Class != card.Class)
+                {
+                    card.IsEnabled = false;
+                }
+                else
+                {
+                    card.IsEnabled = true;
+                }
+            }
+        }
         #endregion
 
 
