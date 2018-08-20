@@ -199,7 +199,7 @@ namespace SchoolTT_02
             if (mMessege._allowDrag == true)
             {
                 var data = new DataObject();
-                data.SetData("Object", sender);
+                data.SetData("Card", sender);
                 OnCardCaptured();
                 DragDrop.DoDragDrop(mMessege, data, DragDropEffects.Move);
                 OnCardDropped();

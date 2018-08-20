@@ -85,27 +85,24 @@ namespace SchoolTT_02
         #region Обработчики
         private void CellDrop(object sender, DragEventArgs e)//Обработчик события перетаскивая в ячейку
         {
-            Card card;
-            if (e.Data.GetData("Object") is Card)
-                card = (Card) e.Data.GetData("Object");//ТУТА
-            else
-            {
-                card = ((Cell) e.Data.GetData("Object")).Card;
-            }
-
-           // MessageBox.Show(card.Background.ToString());
-            
 
             var cell = (Cell)sender;
 
-            if ((card).Count > 0)
+            var Card = (e.Data.GetData("Card") as Card);
+            var pastCell = (e.Data.GetData("Cell") as Cell);
+            var txt = (e.Data.GetData("txt"));
+
+
+            if ((Card).Count > 0)
             {
                 if (cell.Card != null)
                     cell.Card.Count++;
 
-                Card = (e.Data.GetData("Object") as Card);
-
-                if (Card != null) Card.Count--;
+                if (Card != null)
+                {
+                    Card.Count--;
+                    cell.Card = Card;
+                }
 
                 var bindingBackground = new Binding
                 {
@@ -137,9 +134,11 @@ namespace SchoolTT_02
 
         private void Cell_OnMouseDown(object sender, MouseButtonEventArgs e)
         {
+            if (((Cell) sender).Card == null) return;
             var mMessege = ((Cell) sender);
             var data = new DataObject();
-            data.SetData("Object", mMessege);//ТУТА
+            data.SetData("Cell", mMessege);
+            data.SetData("txt", "txteee");//ТУТА
             mMessege.Card.OnCardCaptured();
             DragDrop.DoDragDrop(mMessege, data, DragDropEffects.Move);
             mMessege.Card.OnCardDropped();

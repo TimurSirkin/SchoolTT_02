@@ -38,14 +38,25 @@ namespace SchoolTT_02.Main
 
 
         #region Методы
-        private void AddCard(string pFirstName, string pSecondName, string pThirdName, int pClass, SolidColorBrush pColor, int pCount, string pDiscipline)
+        private void RegisterCard( Card tempCard)
         {
-            var tempCard = new Card(MainTable.ClassList) { FirstName = pFirstName, SecondName = pSecondName, ThirdName = pThirdName, Class = MainTable.ClassList[pClass], Color = pColor, Count = pCount, Discipline = pDiscipline };
             CardListBox.Items.Add(tempCard);
             tempCard.CardDelete += DeleteCard;
             tempCard.CardCaptured += CardCaptured;
             tempCard.CardDropped += CardDropped;
             tempCard.ClassChanged += ClearWrongCells;
+        }
+
+        private void AddCard(string pFirstName, string pSecondName, string pThirdName, int pClass, SolidColorBrush pColor, int pCount, string pDiscipline)
+        {
+            var tempCard = new Card(MainTable.ClassList) { FirstName = pFirstName, SecondName = pSecondName, ThirdName = pThirdName, Class = MainTable.ClassList[pClass], Color = pColor, Count = pCount, Discipline = pDiscipline };
+            RegisterCard(tempCard);
+        }
+
+        private void AddCard()
+        {
+            var tempCard = new Card(MainTable.ClassList);
+            RegisterCard(tempCard);
         }
 
         private void ShowTrueClass(Class pClass)//Отключает все ячейки, не соответствующие pClass
