@@ -71,6 +71,31 @@ namespace SchoolTT_02
 
         #region Методы
 
+        private void DragFrom(Card pCard)
+        {
+                if (Card != null)
+                    Card.Count++;
+
+                pCard.Count--;
+                Card = pCard;
+
+                var bindingBackground = new Binding
+                {
+                    Source = pCard,
+                    Path = new PropertyPath("Background"),
+                    Mode = BindingMode.OneWay
+                };
+                BindingOperations.SetBinding(this, Cell.BackgroundProperty, bindingBackground);
+
+                var bindingDiscipline = new Binding
+                {
+                    Source = pCard.CardDiscipline,
+                    Path = new PropertyPath("Text"),
+                    Mode = BindingMode.Default
+                };
+                BindingOperations.SetBinding(this.Discipline, TextBlock.TextProperty, bindingDiscipline);
+        }
+
         public void Clear()
         {
             if (Card == null) return;
@@ -85,63 +110,41 @@ namespace SchoolTT_02
         #region Обработчики
         private void CellDrop(object sender, DragEventArgs e)//Обработчик события перетаскивая в ячейку
         {
+            Cell hostCell = (Cell)sender;
+            Card hostCard = hostCell.Card;
 
-            var cell = (Cell)sender;
-
-            var Card = (e.Data.GetData("Card") as Card);
-            var pastCell = (e.Data.GetData("Cell") as Cell);
-            var txt = (e.Data.GetData("txt"));
+            Card guestCard = (e.Data.GetData("Card") as Card);
+            Cell guestCell = (e.Data.GetData("Cell") as Cell);
 
 
-            if ((Card).Count > 0)
-            {
-                if (cell.Card != null)
-                    cell.Card.Count++;
-
-                if (Card != null)
-                {
-                    Card.Count--;
-                    cell.Card = Card;
-                }
-
-                var bindingBackground = new Binding
-                {
-                    Source = Card,
-                    Path = new PropertyPath("Background"),
-                    Mode = BindingMode.OneWay
-                };
-                BindingOperations.SetBinding(this, Cell.BackgroundProperty, bindingBackground);
-
-                if (Card == null) return;
-                var bindingDiscipline = new Binding
-                {
-                    Source = Card.CardDiscipline,
-                    Path = new PropertyPath("Text"),
-                    Mode = BindingMode.Default
-                };
-                BindingOperations.SetBinding(this.Discipline, TextBlock.TextProperty, bindingDiscipline);
-            }
+            
+            hostCell.DragFrom(guestCard);
+            
+            if(guestCell != null && hostCard != null)
+                guestCell.DragFrom(hostCard);
             else
             {
-                MessageBox.Show("Количество карточек равно нулю!");
+                guestCell?.Clear();
             }
+
+            this.Card.OnCardDropped();
         }
 
-        private void ContextMenuClearClick(object sender, MouseButtonEventArgs e)
+        private void ContextMenuClearClick(object sender, MouseButtonEventArgs e)//Обработчик очистки ячейки
         {
             Clear();
         }
 
-        private void Cell_OnMouseDown(object sender, MouseButtonEventArgs e)
+        private void Cell_OnMouseDown(object sender, MouseButtonEventArgs e)//Обработчик перетаскивания
         {
             if (((Cell) sender).Card == null) return;
             var mMessege = ((Cell) sender);
             var data = new DataObject();
             data.SetData("Cell", mMessege);
-            data.SetData("txt", "txteee");//ТУТА
+            data.SetData("Card", mMessege.Card);
             mMessege.Card.OnCardCaptured();
             DragDrop.DoDragDrop(mMessege, data, DragDropEffects.Move);
-            mMessege.Card.OnCardDropped();
+            if(mMessege.Card!=null) mMessege.Card.OnCardDropped();
         }
         #endregion
 

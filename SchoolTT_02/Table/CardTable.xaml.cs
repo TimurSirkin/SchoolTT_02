@@ -58,13 +58,25 @@ namespace SchoolTT_02.Table
             AddCellsToRow(pPlace, pLesson);
         }
 
+        private void RegisterDay(Day pDay)//Регистрирует обработчики событий ячейки
+        {
+            pDay.LessonAdded += Add;
+            pDay.LessonAdded += (s, e) => Grid.SetRowSpan(pDay, pDay.LessonList.Count);
+
+            pDay.DayDeleted += (s, e) => _dayList.Remove(pDay);
+            pDay.DayDeleted += (s, e) => TableGrid.RowDefinitions.RemoveAt(Grid.GetRow(pDay));
+            pDay.DayDeleted += (s, e) => MoveRows(Grid.GetRow(pDay), -1);
+            pDay.DayDeleted += (s, e) => TableGrid.Children.Remove(pDay);
+
+
+        }
+
         private void Add(Day pDay, int pPlace)//Добавление дня в список и создание новой строки
         {
+            RegisterDay(pDay);
             this._dayList.Add(pDay);
             TableGrid.Children.Add(pDay);
             Grid.SetRow(pDay, pPlace);
-            pDay.LessonAdded += Add;
-            pDay.LessonAdded += (s, e) => Grid.SetRowSpan(pDay, pDay.LessonList.Count);
             pDay.Add(new Lesson());
             TableGrid.RowDefinitions.Add(new RowDefinition() { Height = new GridLength(СSeparatorHeight) });
         }
@@ -85,7 +97,7 @@ namespace SchoolTT_02.Table
             Lesson lesson = day.LessonList[day.LessonList.Count - 1];
             int place = Grid.GetRow(day) + day.LessonList.Count - 1;
             MoveRows(place, 1);
-            TableGrid.RowDefinitions.Insert(place, new RowDefinition() { MinHeight = СMinHeight });
+            TableGrid.RowDefinitions.Insert(place, new RowDefinition() { MinHeight = СMinHeight, MaxHeight = СMinHeight });
             Add(lesson, place);
             day.RenameLessons();
         }
@@ -114,6 +126,10 @@ namespace SchoolTT_02.Table
             }
         }
 
+        private static void RegisterCell(UIElement newCell)//Регистрирует обработчики событий ячейки
+        {
+        }
+
         private void AddCellsToRow(int pPlace, Lesson pLesson)//Добавляет ячейки в строку на месте pPlace и записывает их списки ячеек соответствующих Class и Lesson 
         {
             var i = 2;
@@ -139,6 +155,7 @@ namespace SchoolTT_02.Table
                 {
                     i++;
                     Cell newCell = new Cell();
+                    RegisterCell(newCell);
                     BindCellToClass(pClass, newCell);
                     TableGrid.Children.Add(newCell);
                     pClass.CellList.Add(newCell);
@@ -252,6 +269,7 @@ namespace SchoolTT_02.Table
 
 
         #region События
+
         #endregion
     }
 }

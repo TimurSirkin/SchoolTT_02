@@ -53,7 +53,7 @@ namespace SchoolTT_02.Table
 
         public void Edit() //Вызывает окно редактирования класса
         {
-            var editClassWindow = new EditClassWindow(this);
+            var editClassWindow = new EditClassAndDayWindow(this);
             if (editClassWindow.ShowDialog() == true)
             {
 
@@ -71,9 +71,17 @@ namespace SchoolTT_02.Table
                 OnClassDeleted();
         }
 
-        private void ContextMenuEditClick(object sender, RoutedEventArgs e)
+        private void ContextMenuEditClick(object sender, RoutedEventArgs e)//Обработчик нажатия на кнопку редактирования урока
         {
             Edit();
+        }
+
+        private void ContextMenuClearClick(object sender, RoutedEventArgs routedEventArgs)//Обработчик нажатия на кнопку очистки урока
+        {
+            foreach (var cell in CellList)
+            {
+                cell.Clear();
+            }
         }
 
         private void Class_OnMouseDoubleClick(object sender, MouseButtonEventArgs e)
@@ -81,13 +89,6 @@ namespace SchoolTT_02.Table
             Edit();
         }
 
-        private void ContextMenuClearClick(object sender, RoutedEventArgs routedEventArgs)
-        {
-            foreach (var cell in CellList)
-            {
-                cell.Clear();
-            }
-        }
         #endregion
 
 

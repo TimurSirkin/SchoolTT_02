@@ -66,8 +66,8 @@
     <Compile Include="EditWindows\EditCardWindow.xaml.cs">
       <DependentUpon>EditCardWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="EditWindows\EditClassWindow.xaml.cs">
-      <DependentUpon>EditClassWindow.xaml</DependentUpon>
+    <Compile Include="EditWindows\EditClassAndDayWindow.xaml.cs">
+      <DependentUpon>EditClassAndDayWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Table\Class.xaml.cs">
       <DependentUpon>Class.xaml</DependentUpon>
@@ -97,7 +97,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="EditWindows\EditClassWindow.xaml">
+    <Page Include="EditWindows\EditClassAndDayWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
