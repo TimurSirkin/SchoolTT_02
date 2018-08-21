@@ -13,6 +13,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using SchoolTT_02.EditWindows;
 
 namespace SchoolTT_02.Table
 {
@@ -25,18 +26,32 @@ namespace SchoolTT_02.Table
         public Day()
         {
             InitializeComponent();
-            DataContext = this;
-            //Add(new Lesson());
+            XName = "День";
         }
         #endregion
 
 
         #region Поля и свойства
         public List<Lesson> LessonList = new List<Lesson>();//Список уроков в этот день
+
+        private string _xname;//Название класса
+        public string XName
+        {
+            get => _xname;
+            set
+            {
+                _xname = value;
+                DayTextBlock.Text = value;
+            }
+        }
         #endregion
 
 
         #region Методы
+        protected virtual void OnDayDelete()
+        {
+            DayDeleted?.Invoke(this, EventArgs.Empty);
+        }
 
         private void CheckLessonsCount()
         {
@@ -54,13 +69,13 @@ namespace SchoolTT_02.Table
                     lesson.DeleteItem.IsEnabled = true;
                 }
             }
+            Grid.SetRowSpan(this, this.LessonList.Count);
         }
 
         public void Add(Lesson pLesson)//Добавляет урок в список дней и вызывает событе, обработчик которого создаст новую строку в Day
         {
             this.LessonList.Add(pLesson);
             pLesson.LessonDeleted += DeleteLessonFromList;
-            pLesson.LessonDeleted += (s, e) => Grid.SetRowSpan(this, this.LessonList.Count);
             pLesson.LessonDeleted += CheckLessonsCount;
             OnLessonAdded();
             CheckLessonsCount();
@@ -78,6 +93,15 @@ namespace SchoolTT_02.Table
         {
             LessonAdded?.Invoke(this, EventArgs.Empty);
         }//Инициализация события
+
+        public void Edit() //Вызывает окно редактирования класса
+        {
+            var editClassWindow = new EditClassAndDayWindow(this);
+            if (editClassWindow.ShowDialog() == true)
+            {
+
+            }
+        }
         #endregion
 
 
@@ -101,16 +125,57 @@ namespace SchoolTT_02.Table
 
         }
 
-        private void CheckLessonsCount(object sender, EventArgs e)
+        private void CheckLessonsCount(object sender, EventArgs e)//Обработчик длобавления урока, проверяет кол-во уроков в дне
         {
             CheckLessonsCount();
+        }
+
+        private void Day_OnMouseDoubleClick(object sender, MouseButtonEventArgs e)//Обработчик двойного щелчка
+        {
+            Edit();
+        }
+
+        private void ContextMenuDeleteClick(object sender, RoutedEventArgs e)//Обработчик нажатия на кнопку удаления дня
+        {
+            if (MessageBox.Show("Все строки даннго дня будут удалены." + "\n" +
+                                "Удалить день?",
+                    "Подтверждение", MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.Yes)
+            {
+                for (var i = LessonList.Count - 1; i >= 0; i--)
+                {
+                    var lesson = LessonList[i];
+                    lesson.LessonDeleted -= CheckLessonsCount;
+                    lesson.OnLessonDeleted();
+                }
+                OnDayDelete();
+            }
+        }
+
+        private void ContextMenuEditClick(object sender, RoutedEventArgs e)//Обработчик нажатия на кнопку редактирования дня
+        {
+            Edit();
+        }
+
+        private void ContextMenuClearClick(object sender, RoutedEventArgs routedEventArgs)//Обработчик нажатия на кнопку очистки дня
+        {
+            foreach (var lesson in LessonList)
+            {
+                foreach (var cell in lesson.CellList)
+                {
+                    cell.Clear();
+                }
+            }
         }
         #endregion
 
 
         #region События
         public event EventHandler LessonAdded;
+
+        public event EventHandler DayDeleted;
         #endregion
 
+
+        
     }
 }

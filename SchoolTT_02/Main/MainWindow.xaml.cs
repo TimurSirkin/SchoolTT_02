@@ -28,7 +28,7 @@ namespace SchoolTT_02.Main
             AddCard("Тимур", "Сиркин", "Владимирович", 0, Brushes.Red, 3, "Русский язык");
             AddCard("Андрей", "Белов", "Семенович", 1, Brushes.BlanchedAlmond, 13, "Математика");
             AddCard("Айдар", "Закиров", "Рафаэльевич", 2, Brushes.Green, 8, "История");
-            AddCard("Олег", "Шатин", "Михаилович", 0, Brushes.Yellow, 0, "Биология");
+            AddCard("Олег", "Шатин", "Михаилович", 0, Brushes.Yellow, 2, "Биология");
         }
         #endregion
 
@@ -38,9 +38,8 @@ namespace SchoolTT_02.Main
 
 
         #region Методы
-        private void AddCard(string pFirstName, string pSecondName, string pThirdName, int pClass, SolidColorBrush pColor, int pCount, string pDiscipline)
+        private void RegisterCard( Card tempCard)
         {
-            var tempCard = new Card(MainTable.ClassList) { FirstName = pFirstName, SecondName = pSecondName, ThirdName = pThirdName, Class = MainTable.ClassList[pClass], Color = pColor, Count = pCount, Discipline = pDiscipline };
             CardListBox.Items.Add(tempCard);
             tempCard.CardDelete += DeleteCard;
             tempCard.CardCaptured += CardCaptured;
@@ -48,7 +47,19 @@ namespace SchoolTT_02.Main
             tempCard.ClassChanged += ClearWrongCells;
         }
 
-        private void ShowTrueClass(Class pClass)//Отключает все ячейки, не соответствующие pClass
+        private void AddCard(string pFirstName, string pSecondName, string pThirdName, int pClass, SolidColorBrush pColor, int pCount, string pDiscipline)
+        {
+            var tempCard = new Card(MainTable.ClassList) { FirstName = pFirstName, SecondName = pSecondName, ThirdName = pThirdName, Class = MainTable.ClassList[pClass], Color = pColor, Count = pCount, Discipline = pDiscipline };
+            RegisterCard(tempCard);
+        }
+
+        private void AddCard()
+        {
+            var tempCard = new Card(MainTable.ClassList);
+            RegisterCard(tempCard);
+        }
+
+        private void ShowTrueColumn(Class pClass)//Отключает все ячейки, не соответствующие pClass
         {
             foreach (var obj in MainTable.TableGrid.Children)
             {
@@ -71,6 +82,23 @@ namespace SchoolTT_02.Main
 
                         break;
                 }
+            }
+        }
+
+        private static void ReturnElemnt(object obj)//Возвращает в исходное состояние элемент
+        {
+            switch (obj)
+            {
+                case Cell _:
+                    var cell = (Cell)obj;
+                    cell.AllowDrop = true;
+                    cell.BorderBrush = Brushes.SkyBlue;
+                    cell.CellClassTextBox.FontSize = 12;
+                    break;
+                case Class _:
+                    ((Class)obj).BorderBrush = Brushes.White;
+                    ((Class)obj).Background = Brushes.SkyBlue;
+                    break;
             }
         }
         #endregion
@@ -99,35 +127,19 @@ namespace SchoolTT_02.Main
 
         private void CardCaptured(object sender, EventArgs e)//Переноса карточки
         {
-            ShowTrueClass(((Card)sender).Class);
+            ShowTrueColumn(((Card)sender).Class);
         }
 
         private void CardDropped(object sender, EventArgs e)//Броска карточки в ячейку
         {
+
             foreach (var obj in MainTable.TableGrid.Children)
             {
-                if (obj is Cell)
-                {
-                    var cell = (Cell)obj;
-                    cell.AllowDrop = true;
-                    cell.BorderBrush = Brushes.SkyBlue;
-                    cell.CellClassTextBox.FontSize = 12;
-                }
-                if (obj is Class)
-                {
-                    ((Class)obj).BorderBrush = Brushes.White;
-                    //((Class)obj).BorderThickness = new Thickness(2);
-                    ((Class)obj).Background = Brushes.SkyBlue;
-                }
+                ReturnElemnt(obj);
             }
         }
 
-        private void DeletCardFromWrongColumns(object sender, EventArgs e)//Удаление карточки из неподходящих строк
-        {
-
-        }
-
-        private void ClearWrongCells(object sender, EventArgs e)
+        private static void ClearWrongCells(object sender, EventArgs e)//Удаление карточки из неподходящих строк
         {
             var card = (Card) sender;
             foreach (var cell in card.Class.CellList)
@@ -136,7 +148,35 @@ namespace SchoolTT_02.Main
             }
         }
 
+        private void CardListBox_OnDrop(object sender, DragEventArgs e)//Бросок карточки в ЛистБокс
+        {
+            var guestCell = (e.Data.GetData("Cell") as Cell);
+            guestCell?.Clear();
+            foreach (var obj in MainTable.TableGrid.Children)
+            {
+                ReturnElemnt(obj);
+            }
+        }
+
+        private void MainTable_OnFocusChanged(object sender, EventArgs e)//Смена фокусной ячейки
+        {
+            var focusCell = sender as Cell;
+            foreach (Card card in CardListBox.Items)
+            {
+                if (focusCell != null && focusCell.Class != card.Class)
+                {
+                    card.IsEnabled = false;
+                }
+                else
+                {
+                    card.IsEnabled = true;
+                }
+            }
+        }
         #endregion
+
+
+
     }
 }
 

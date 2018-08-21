@@ -15,20 +15,28 @@ using SchoolTT_02.Table;
 
 namespace SchoolTT_02.EditWindows
 {
-    public partial class EditClassWindow : Window
+    public partial class EditClassAndDayWindow : Window
     {
         #region Конструкторы и деструкторы
-        public EditClassWindow(Class pClass)
+        public EditClassAndDayWindow(UIElement pElement)
         {
             InitializeComponent();
-            _class = pClass;
-            WindowXName.Text = pClass.XName;
+            _element = pElement;
+            switch (_element)
+            {
+                case Class @class:
+                    WindowXName.Text = @class.XName;
+                    break;
+                case Day @day:
+                    WindowXName.Text = @day.XName;
+                    break;
+            }
         }
         #endregion
 
 
         #region Поля и свойства
-        private readonly Class _class;
+        private readonly UIElement _element;
         #endregion
 
 
@@ -39,7 +47,15 @@ namespace SchoolTT_02.EditWindows
         #region Обработчики
         private void AcceptClick(object sender, RoutedEventArgs e)//Кнопка "Принять"
         {
-            _class.XName = WindowXName.Text;
+            switch (_element)
+            {
+                case Class @class:
+                    @class.XName = WindowXName.Text;
+                    break;
+                case Day @day:
+                    @day.XName = WindowXName.Text;
+                    break;
+            }
             this.DialogResult = true;
         }
         #endregion

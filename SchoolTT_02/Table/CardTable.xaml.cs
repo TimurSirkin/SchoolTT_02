@@ -42,6 +42,8 @@ namespace SchoolTT_02.Table
         private const int СSeparatorHeight = 100;
         private const int СMinWidth = 100;
 
+        private Cell FocusCell;//Фокусная ячейка
+
         private readonly List<Day> _dayList = new List<Day>();//Список дней в таблице
 
         public readonly List<Class> ClassList = new List<Class>();//Список классов в таблице
@@ -58,13 +60,25 @@ namespace SchoolTT_02.Table
             AddCellsToRow(pPlace, pLesson);
         }
 
+        private void RegisterDay(Day pDay)//Регистрирует обработчики событий ячейки
+        {
+            pDay.LessonAdded += Add;
+            pDay.LessonAdded += (s, e) => Grid.SetRowSpan(pDay, pDay.LessonList.Count);
+
+            pDay.DayDeleted += (s, e) => _dayList.Remove(pDay);
+            pDay.DayDeleted += (s, e) => TableGrid.RowDefinitions.RemoveAt(Grid.GetRow(pDay));
+            pDay.DayDeleted += (s, e) => MoveRows(Grid.GetRow(pDay), -1);
+            pDay.DayDeleted += (s, e) => TableGrid.Children.Remove(pDay);
+
+
+        }
+
         private void Add(Day pDay, int pPlace)//Добавление дня в список и создание новой строки
         {
+            RegisterDay(pDay);
             this._dayList.Add(pDay);
             TableGrid.Children.Add(pDay);
             Grid.SetRow(pDay, pPlace);
-            pDay.LessonAdded += Add;
-            pDay.LessonAdded += (s, e) => Grid.SetRowSpan(pDay, pDay.LessonList.Count);
             pDay.Add(new Lesson());
             TableGrid.RowDefinitions.Add(new RowDefinition() { Height = new GridLength(СSeparatorHeight) });
         }
@@ -77,17 +91,6 @@ namespace SchoolTT_02.Table
             TableGrid.Children.Add(pClass);
             Grid.SetColumn(pClass, pPlace);
             AddCellsToColumn(pPlace, pClass);
-        }
-
-        private void Add(object sender, EventArgs e)//Вызывается при обработке событие LessonAdded(Добавление урока в список дней)
-        {
-            Day day = (Day)sender;
-            Lesson lesson = day.LessonList[day.LessonList.Count - 1];
-            int place = Grid.GetRow(day) + day.LessonList.Count - 1;
-            MoveRows(place, 1);
-            TableGrid.RowDefinitions.Insert(place, new RowDefinition() { MinHeight = СMinHeight });
-            Add(lesson, place);
-            day.RenameLessons();
         }
 
         private void MoveRows(int pStart, int pDirection)//Смещает все элементы таблицы, которые находятся ниже строки с номером pStart, на pDirection строк
@@ -114,12 +117,18 @@ namespace SchoolTT_02.Table
             }
         }
 
+        private void RegisterCell(Cell pCell)//Регистрирует обработчики событий ячейки
+        {
+            pCell.CellFocused += SetFocusCell;
+        }
+
         private void AddCellsToRow(int pPlace, Lesson pLesson)//Добавляет ячейки в строку на месте pPlace и записывает их списки ячеек соответствующих Class и Lesson 
         {
             var i = 2;
             foreach (var Class in ClassList)
             {
                 var newCell = new Cell();
+                RegisterCell(newCell);
                 BindCellToClass(Class, newCell);
                 TableGrid.Children.Add(newCell);
                 pLesson.CellList.Add(newCell);
@@ -139,6 +148,8 @@ namespace SchoolTT_02.Table
                 {
                     i++;
                     Cell newCell = new Cell();
+                    RegisterCell(newCell);
+                    RegisterCell(newCell);
                     BindCellToClass(pClass, newCell);
                     TableGrid.Children.Add(newCell);
                     pClass.CellList.Add(newCell);
@@ -210,10 +221,26 @@ namespace SchoolTT_02.Table
             }
             TableGrid.Children.Remove(pCell);
         }
+
+        protected virtual void OnFocusChanged(Cell pCell)//Инициализация события
+        {
+            FocusChanged?.Invoke(pCell, EventArgs.Empty);
+        }
         #endregion
 
 
         #region Обработчики
+        private void Add(object sender, EventArgs e)//Вызывается при обработке событие LessonAdded(Добавление урока в список дней)
+        {
+            Day day = (Day)sender;
+            Lesson lesson = day.LessonList[day.LessonList.Count - 1];
+            int place = Grid.GetRow(day) + day.LessonList.Count - 1;
+            MoveRows(place, 1);
+            TableGrid.RowDefinitions.Insert(place, new RowDefinition() { MinHeight = СMinHeight, MaxHeight = СMinHeight });
+            Add(lesson, place);
+            day.RenameLessons();
+        }
+
         private void AddClassClick(object sender, RoutedEventArgs e)
         {
             Add(new Class(), TableGrid.ColumnDefinitions.Count);
@@ -248,10 +275,29 @@ namespace SchoolTT_02.Table
             TableGrid.ColumnDefinitions.RemoveAt(Grid.GetColumn(Class));
             MoveColumns(place, -1);
         }
+
+        private void SetFocusCell(object sender, EventArgs e)//Устанавливает на ячейке фокус
+        {
+            if (FocusCell != null)
+                FocusCell.BorderBrush = Brushes.SkyBlue;
+            if (FocusCell == sender as Cell)
+            {
+                FocusCell = null;
+            }
+            else
+            {
+                FocusCell = sender as Cell;
+            }
+
+            OnFocusChanged(FocusCell);
+        }
         #endregion
 
 
         #region События
+        public event EventHandler FocusChanged;//Смена фокусной ячейки
         #endregion
+
+        
     }
 }

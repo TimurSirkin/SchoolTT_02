@@ -45,7 +45,7 @@ namespace SchoolTT_02.Table
 
 
         #region Методы
-        protected virtual void OnLessonDeleted()//Запуск события
+        public void OnLessonDeleted()//Запуск события
         {
             LessonDeleted?.Invoke(this, EventArgs.Empty);
         }

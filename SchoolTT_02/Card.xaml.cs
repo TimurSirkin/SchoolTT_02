@@ -155,12 +155,12 @@ namespace SchoolTT_02
             CardDelete?.Invoke(this, EventArgs.Empty);
         }
 
-        protected virtual void OnCardCaptured()//Инициализация события
+        public void OnCardCaptured()//Инициализация события
         {
             CardCaptured?.Invoke(this, EventArgs.Empty);
         }
 
-        protected virtual void OnCardDropped()//Инициализация события
+        public void OnCardDropped()//Инициализация события
         {
             CardDropped?.Invoke(this, EventArgs.Empty);
         }
@@ -199,7 +199,7 @@ namespace SchoolTT_02
             if (mMessege._allowDrag == true)
             {
                 var data = new DataObject();
-                data.SetData("Object", sender);
+                data.SetData("Card", sender);
                 OnCardCaptured();
                 DragDrop.DoDragDrop(mMessege, data, DragDropEffects.Move);
                 OnCardDropped();

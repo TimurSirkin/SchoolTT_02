@@ -71,6 +71,36 @@ namespace SchoolTT_02
 
         #region Методы
 
+        protected virtual void OnCellFocused()
+        {
+            CellFocused?.Invoke(this, EventArgs.Empty);
+        }
+
+        private void DragFrom(Card pCard)
+        {
+                if (Card != null)
+                    Card.Count++;
+
+                pCard.Count--;
+                Card = pCard;
+
+                var bindingBackground = new Binding
+                {
+                    Source = pCard,
+                    Path = new PropertyPath("Background"),
+                    Mode = BindingMode.OneWay
+                };
+                BindingOperations.SetBinding(this, Cell.BackgroundProperty, bindingBackground);
+
+                var bindingDiscipline = new Binding
+                {
+                    Source = pCard.CardDiscipline,
+                    Path = new PropertyPath("Text"),
+                    Mode = BindingMode.Default
+                };
+                BindingOperations.SetBinding(this.Discipline, TextBlock.TextProperty, bindingDiscipline);
+        }
+
         public void Clear()
         {
             if (Card == null) return;
@@ -81,50 +111,62 @@ namespace SchoolTT_02
         }
         #endregion
 
-
+       
         #region Обработчики
         private void CellDrop(object sender, DragEventArgs e)//Обработчик события перетаскивая в ячейку
         {
-            var card = (Card)e.Data.GetData("Object");
-            var cell = (Cell)sender;
+            Cell hostCell = (Cell)sender;
+            Card hostCard = hostCell.Card;
 
-            if ((card).Count > 0)
-            {
-                if (cell.Card != null)
-                    cell.Card.Count++;
+            Card guestCard = (e.Data.GetData("Card") as Card);
+            Cell guestCell = (e.Data.GetData("Cell") as Cell);
 
-                Card = (e.Data.GetData("Object") as Card);
 
-                if (Card != null) Card.Count--;
-
-                var bindingBackground = new Binding
-                {
-                    Source = Card,
-                    Path = new PropertyPath("Background"),
-                    Mode = BindingMode.OneWay
-                };
-                BindingOperations.SetBinding(this, Cell.BackgroundProperty, bindingBackground);
-
-                if (Card == null) return;
-                var bindingDiscipline = new Binding
-                {
-                    Source = Card.CardDiscipline,
-                    Path = new PropertyPath("Text"),
-                    Mode = BindingMode.Default
-                };
-                BindingOperations.SetBinding(this.Discipline, TextBlock.TextProperty, bindingDiscipline);
-            }
+            
+            hostCell.DragFrom(guestCard);
+            
+            if(guestCell != null && hostCard != null)
+                guestCell.DragFrom(hostCard);
             else
             {
-                MessageBox.Show("Количество карточек равно нулю!");
+                guestCell?.Clear();
             }
+
+            this.Card.OnCardDropped();
         }
 
-        private void ContextMenuClearClick(object sender, MouseButtonEventArgs e)
+        private void ContextMenuClearClick(object sender, MouseButtonEventArgs e)//Обработчик очистки ячейки
         {
             Clear();
         }
+
+        private void Cell_OnMouseDown(object sender, MouseButtonEventArgs e)//Обработчик перетаскивания
+        {
+            var cell = ((Cell)sender);
+
+
+            if (((Cell) sender).Card == null) return;
+            var data = new DataObject();
+            data.SetData("Cell", cell);
+            data.SetData("Card", cell.Card);
+            cell.Card.OnCardCaptured();
+            DragDrop.DoDragDrop(cell, data, DragDropEffects.Move);
+            if(cell.Card!=null) cell.Card.OnCardDropped();
+        }
+
+        private void Cell_OnMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            var cell = sender as Cell;
+            if (cell != null) cell.BorderBrush = Brushes.Black;
+            OnCellFocused();
+        }
         #endregion
+
+        #region События
+        public event EventHandler CellFocused;
+        #endregion
+
+        
     }
 }
     

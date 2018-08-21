@@ -1,4 +1,4 @@
-﻿<Window x:Class="SchoolTT_02.EditWindows.EditClassWindow"
+﻿<Window x:Class="SchoolTT_02.EditWindows.EditClassAndDayWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -19,6 +19,7 @@
             <Setter Property="BorderThickness" Value="3" />
             <Setter Property="Background" Value="White" />
             <Setter Property="Foreground" Value="DarkBlue" />
+            <Setter Property="Width" Value="80" />
         </Style>
 
         <Style TargetType="ListBox">
@@ -34,7 +35,14 @@
         <StackPanel >
             <TextBlock>Название:</TextBlock>
             <TextBox   Name="WindowXName"></TextBox>
-            <Button IsDefault="True" Click="AcceptClick" FontFamily="Segoe UI Black" Content="Принять" Margin="0,10" ></Button>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+            <Button IsDefault="True" Click="AcceptClick" Content="Принять" Margin="0,10" ></Button>
+            <Button Grid.Column="1" IsCancel="True" Content="Отменить" Margin="0,10" ></Button>
+            </Grid>
         </StackPanel>
     </Grid>
 </Window>
