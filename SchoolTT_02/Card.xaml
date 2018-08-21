@@ -6,7 +6,7 @@
              xmlns:local="clr-namespace:SchoolTT_02"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800"  Height="80" Padding="10" HorizontalAlignment="Stretch" 
-             MouseDoubleClick="DoubleClick" MouseLeftButtonDown="CardMouseDown" BorderBrush="Black" BorderThickness="2" Template="{DynamicResource Template}">
+             MouseDoubleClick="DoubleClick" MouseLeftButtonDown="CardMouseDown" BorderBrush="Black" BorderThickness="2">
     <UserControl.ToolTip>
         <ToolTip Background="#7F87CEEB"  Foreground="Black" HasDropShadow="False"
                      Placement="Relative" HorizontalOffset="-100" VerticalOffset="0">
@@ -19,40 +19,10 @@
     </UserControl.ToolTip>
 
     <UserControl.Resources>
-
-
-        <ControlTemplate x:Key="Template" TargetType="{x:Type UserControl}">
-            <!--В стандартном шаблоне кнопки вместо Border используется ButtonChrome-->
-            <Border
-                Name="Border"
-                Background="{TemplateBinding Background}"
-                CornerRadius="3">
-                <Grid>
-                    <Rectangle Name="StrokeBorder" Stroke="Black" StrokeThickness="0" StrokeDashArray="1, 1"></Rectangle>
-                    <ContentPresenter Margin="{TemplateBinding Padding}"></ContentPresenter>
-                </Grid>
-            </Border>
-            <ControlTemplate.Triggers>
-                <Trigger Property="IsMouseOver" Value="True">
-                    <Setter TargetName="Border" Property="BorderThickness" Value="2"></Setter>
-                </Trigger>
-                <Trigger Property="IsEnabled" Value="False">
-                    <Setter TargetName="Border" Property="TextBlock.Foreground" Value="White" />
-                    <Setter TargetName="Border" Property="Background" Value="MistyRose" />
-                </Trigger>
-            </ControlTemplate.Triggers>
-        </ControlTemplate>
-
-
         <Style TargetType="TextBlock">
             <Setter Property="FontFamily" Value="Segoe UI Black" />
             <Setter Property="VerticalAlignment" Value="Center" />
             <Setter Property="HorizontalAlignment" Value="Center" />
-            <Style.Triggers>
-                <Trigger Property="IsEnabled" Value="False">
-                    <Setter Property="Foreground" Value="SkyBlue" />
-            </Trigger>
-            </Style.Triggers>
         </Style>
 
         <Style x:Key="ToolStyle">
@@ -84,7 +54,7 @@
         </Grid.ColumnDefinitions>
 
 
-        <TextBlock  Grid.Row="0" Grid.Column="0" Name="CardClass"></TextBlock>
+        <TextBlock Grid.Row="0" Grid.Column="0" Name="CardClass"></TextBlock>
         <TextBlock Grid.Row="1" Grid.Column="0" Name="CardDiscipline"></TextBlock>
         <TextBlock Grid.Row="0" Grid.Column="1"  Grid.RowSpan="2"  Name="CardCount" FontSize="18" FontWeight="Bold" ></TextBlock>
 
