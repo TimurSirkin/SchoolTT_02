@@ -57,3 +57,10 @@ C:\Users\SWS\Documents\GitHub\SchoolTT_02\SchoolTT_02\obj\Debug\EditWindows\Crea
 C:\Users\SWS\Documents\GitHub\SchoolTT_02\SchoolTT_02\obj\Debug\EditWindows\CreateCardWindow.baml
 C:\Users\SWS\Documents\GitHub\SchoolTT_02\SchoolTT_02\obj\Debug\EditWindows\EditClassAndDayWindow.g.cs
 C:\Users\SWS\Documents\GitHub\SchoolTT_02\SchoolTT_02\obj\Debug\EditWindows\EditClassAndDayWindow.baml
+C:\Users\timur\source\repos\SchoolTT_02\SchoolTT_02\obj\Debug\Card.g.cs
+C:\Users\timur\source\repos\SchoolTT_02\SchoolTT_02\obj\Debug\Cell.g.cs
+C:\Users\timur\source\repos\SchoolTT_02\SchoolTT_02\obj\Debug\EditWindows\CreateCardWindow.g.cs
+C:\Users\timur\source\repos\SchoolTT_02\SchoolTT_02\obj\Debug\EditWindows\EditCardWindow.g.cs
+C:\Users\timur\source\repos\SchoolTT_02\SchoolTT_02\obj\Debug\EditWindows\EditClassAndDayWindow.g.cs
+C:\Users\timur\source\repos\SchoolTT_02\SchoolTT_02\obj\Debug\Table\Lesson.g.cs
+C:\Users\timur\source\repos\SchoolTT_02\SchoolTT_02\obj\Debug\Table\CardTable.g.cs

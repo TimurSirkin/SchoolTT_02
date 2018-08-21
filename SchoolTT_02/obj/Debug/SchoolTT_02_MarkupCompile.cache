@@ -4,17 +4,17 @@
 winexe
 C#
 .cs
-C:\Users\SWS\Documents\GitHub\SchoolTT_02\SchoolTT_02\obj\Debug\
+C:\Users\timur\source\repos\SchoolTT_02\SchoolTT_02\obj\Debug\
 SchoolTT_02
 none
 false
 DEBUG;TRACE
-C:\Users\SWS\Documents\GitHub\SchoolTT_02\SchoolTT_02\Main\App.xaml
+C:\Users\timur\source\repos\SchoolTT_02\SchoolTT_02\Main\App.xaml
 10-2100696150
 
 141688026562
-141882249534
+141255871787
 Card.xaml;Cell.xaml;EditWindows\CreateCardWindow.xaml;EditWindows\EditCardWindow.xaml;EditWindows\EditClassAndDayWindow.xaml;Main\MainWindow.xaml;Table\Class.xaml;Table\Day.xaml;Table\Lesson.xaml;Table\CardTable.xaml;
 
-False
+True
 
